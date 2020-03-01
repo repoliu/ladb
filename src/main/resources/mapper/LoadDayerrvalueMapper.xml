@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadDayerrvalueMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.LoadDayerrvalue" >
+    <result column="area" property="area" jdbcType="INTEGER" />
+    <result column="areaname" property="areaname" jdbcType="VARCHAR" />
+    <result column="forday" property="forday" jdbcType="VARCHAR" />
+    <result column="maxtime" property="maxtime" jdbcType="VARCHAR" />
+    <result column="max_err" property="maxErr" jdbcType="DECIMAL" />
+    <result column="ave_rate" property="aveRate" jdbcType="DECIMAL" />
+    <result column="peak_err" property="peakErr" jdbcType="DECIMAL" />
+    <result column="valey_err" property="valeyErr" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    area,  forday,maxtime ,max_err , ave_rate,peak_err , valey_err
+  </sql>
+
+  
+
+  <select id="selectAreaDate" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> from load_dayerrvalue where area=${area} and forday='${date}' limit 1
+  </select>
+</mapper>

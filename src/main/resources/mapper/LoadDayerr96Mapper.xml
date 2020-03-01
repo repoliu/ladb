@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadDayerr96Mapper" >
+
+
+
+  <resultMap id="BaseResultMap" type="com.dky.entity.LoadDayerr96" >
+        <result column="area" property="area" jdbcType="INTEGER" />
+        <result column="num" property="num" jdbcType="DECIMAL" />
+        <result column="forday" property="forday" jdbcType="VARCHAR" />
+        <result column="mtime" property="mtime" jdbcType="VARCHAR" />
+        <result column="loadact" property="loadact" jdbcType="DECIMAL" />
+        <result column="loadfor" property="loadfor" jdbcType="DECIMAL" />
+        <result column="err" property="err" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    area,  num , forday , mtime ,  loadact , loadfor,err
+  </sql>
+
+  
+  <!--  -->
+  <select id="selectAreaDate" resultMap="BaseResultMap">
+    select   <include refid="Base_Column_List"/>  from  load_dayerr96
+      where area=${area} and forday='${date}' order BY mtime asc limit 97
+  </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.OutputValueMapper">
+
+    <resultMap id="BaseResultMap" type="com.dky.entity.OutputValue">
+        <result column="areaname" property="areaName" jdbcType="VARCHAR"/>
+        <result column="mdate" property="mDate" jdbcType="VARCHAR"/>
+        <result column="output_value" property="outPutValue" jdbcType="DECIMAL"/>
+        <result column="output_index" property="outPutIndex" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.OutputValue">
+        SELECT areaname,mdate,output_value,output_index FROM output_value where 1=1
+        <if test="minDate!=null">
+            and mdate <![CDATA[ >= ]]> #{minDate,jdbcType=VARCHAR}
+        </if>
+        <if test="mDate!=null">
+            and mdate <![CDATA[ <= ]]> #{mDate,jdbcType=VARCHAR}
+        </if>
+        <if test="areaName!=null">
+            and areaname =#{areaName,jdbcType=VARCHAR}
+        </if>
+        order  by  mdate  asc
+    </select>
+
+
+    <select id="selectMaxDate" resultType="java.util.Map" parameterType="com.dky.entity.OutputValue">
+        select max(maxdate),min(mindate) from
+        (
+        select max(ist.mdate) maxdate,min(ist.mdate) mindate  from  industry_structure  ist where   ist.areaname=#{areaName,jdbcType=VARCHAR}
+        union all
+        select max(ov.mdate) maxdate,min(ov.mdate) mindate  from  output_value ov where   ov.areaname=#{areaName,jdbcType=VARCHAR}
+        union all
+        select max(pg.mdate) maxdate,min(pg.mdate) mindate  from  per_gdp pg where   pg.areaname=#{areaName,jdbcType=VARCHAR}
+        union all
+        select max(pin.mdate) maxdate,min(pin.mdate) mindate  from  per_income pin where   pin.areaname=#{areaName,jdbcType=VARCHAR}
+        union all
+        select max(rs.mdate) maxdate,min(rs.mdate) mindate  from  relation_support rs where   rs.areaname=#{areaName,jdbcType=VARCHAR}
+        ) industry_structure
+
+    </select>
+
+    <insert id="insert"  parameterType="com.dky.entity.OutputValue">
+    insert into     output_value  (areaname,mdate,output_value,output_index)
+    VALUES (
+    #{areaName,jdbcType=VARCHAR}
+    ,#{mDate,jdbcType=VARCHAR}
+    ,#{outPutValue,jdbcType=DECIMAL}
+    ,#{outPutIndex,jdbcType=DECIMAL}
+    )
+    </insert>
+
+
+
+
+
+</mapper>

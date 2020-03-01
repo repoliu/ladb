@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	<!--1 自动扫描 将标注Spring注解的类自动转化Bean-->
+	<context:component-scan base-package="com.dky" />
+
+	<!-- 加载数据库配置文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 数据库连接池 -->
+	<bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<!-- 最大连接数据库连接数,设 0 为没有限制  -->
+		<property name="maxActive" value="10" />
+		<!-- 最小连接池数量 -->
+		<property name="minIdle" value="5" />
+	</bean>
+	<!--数据源2-->
+	<bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close">
+		<property name="url" value="${jdbc.url2}" />
+		<property name="username" value="${jdbc.username2}" />
+		<property name="password" value="${jdbc.password2}" />
+		<property name="driverClassName" value="${jdbc.driver2}" />
+		<!-- 最大连接数据库连接数,设 0 为没有限制  -->
+		<property name="maxActive" value="10" />
+		<!-- 最小连接池数量 -->
+		<property name="minIdle" value="5" />
+	</bean>
+	<bean id="selectdataSource" class="com.dky.util.daoOperate.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry value-ref="dataSource1" key="dataSource1"></entry>
+				<entry value-ref="dataSource2" key="dataSource2"></entry>
+			</map>
+		</property>
+		<!-- 默认使用dataSourceSig的数据源 -->
+		<property name="defaultTargetDataSource" ref="dataSource1"></property>
+	</bean>
+
+	<!-- 整合mybatis：SqlsessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="selectdataSource" />
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:mapper/**/*.xml"></property>
+	</bean>
+
+
+	<!-- 注入DAO对象：配置mapper MapperFactoryBean：用于生成mapper代理对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 配置扫描包的路径 如果要扫描多个包，中间使用半角逗号分隔 -->
+		<property name="basePackage" value="com.dky.mapper" />
+		<!-- 使用sqlSessionFactoryBeanName -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="selectdataSource" />
+	</bean>
+
+	<!-- 通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 传播行为 -->
+			<!-- REQUIRED：如果有事务，则在事务中执行；如果没有事务，则开启一个新的事物 -->
+			<!--<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" />-->
+			<!-- SUPPORTS：如果有事务，则在事务中执行；如果没有事务，则不会开启事物 -->
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 切面 -->
+	<aop:config>
+		<!-- 定义在service包或者子包里的任意方法的执行 -->
+		<aop:pointcut id="txPointCut"
+					  expression="execution(* com.dky.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" />
+	</aop:config>
+</beans>

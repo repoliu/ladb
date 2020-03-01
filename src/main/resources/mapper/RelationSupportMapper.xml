@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.RelationSupportMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.RelationSupport">
+        <id column="AREA" property="area" jdbcType="INTEGER"/>
+        <id column="MDATE" property="mdate" jdbcType="VARCHAR"/>
+        <result column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="AREANAME" property="areaname" jdbcType="VARCHAR"/>
+        <result column="RELATION_TYPE" property="relationType" jdbcType="VARCHAR"/>
+        <result column="RELATION_DEGREE" property="relationDegree" jdbcType="DECIMAL"/>
+        <result column="VER_TIME" property="verTime" jdbcType="DATE"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.dky.entity.RelationSupport">
+        INSERT INTO relation_support (AREA, MDATE, ID, AREANAME, RELATION_TYPE, RELATION_DEGREE, VER_TIME)
+        VALUES (
+            #{area,jdbcType=INTEGER}
+            , #{mdate,jdbcType=VARCHAR}
+            , #{id,jdbcType=BIGINT}
+            , #{areaname,jdbcType=VARCHAR}
+            , #{relationType,jdbcType=VARCHAR}
+            , #{relationDegree,jdbcType=DECIMAL}
+            , #{verTime,jdbcType=DATE}
+        )
+
+    </insert>
+
+    <sql id="Base_Column_List">
+        AREA, MDATE, ID, AREANAME, RELATION_TYPE, RELATION_DEGREE, VER_TIME
+    </sql>
+    <sql id="Chart_Column_List">
+        RELATION_TYPE, RELATION_DEGREE, areaname
+    </sql>
+    <select id="findSupportListByKey" resultMap="BaseResultMap" parameterType="Map">
+        SELECT
+        <include refid="Chart_Column_List"/>
+        FROM relation_support
+        WHERE
+        mdate = #{mdate}
+        <if test="areaname == null">
+            AND AREA = #{area}
+        </if>
+        <if test="areaname != null">
+            AND areaname = #{areaname}
+        </if>
+        and (relation_type='温度' or relation_type='人体舒适度' or relation_type='湿度' or relation_type='降雨量')
+        order by relation_type
+    </select>
+
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.RelationSupport">
+        select
+        <include refid="Base_Column_List"/>
+        from relation_support where 1=1
+        and mdate  <![CDATA[ >= ]]> #{minDate,jdbcType=VARCHAR}
+        and mdate <![CDATA[ <= ]]>  #{mdate,jdbcType=VARCHAR}
+        and areaname=#{areaname,jdbcType=VARCHAR} and (relation_type='生产总值' or relation_type='人均GDP' or
+        relation_type='社会用电总量' or relation_type='三产产值' or relation_type='城镇居民人均收入' or relation_type='各行业用电量')
+    </select>
+    <select id="findLastMdateByArea" resultType="java.lang.String" parameterType="java.lang.Integer">
+        SELECT MDATE
+        FROM relation_support
+        WHERE AREA = #{area} AND char_length(mdate) = 6
+        ORDER BY MDATE DESC LIMIT 1 offset 0
+    </select>
+    <select id="findYearSupportByParams" resultMap="BaseResultMap" parameterType="Map">
+        SELECT AREA
+        ,ID
+        ,AREANAME
+        ,MDATE
+        ,RELATION_TYPE
+        ,RELATION_DEGREE
+        ,VER_TIME
+        FROM relation_support where area = #{area} and relation_type = #{type}
+        and mdate BETWEEN #{startYear} and #{endYear} and char_length(mdate) = 6 order by mdate;
+    </select>
+
+
+    <!-- 这个方法是X加的，本来用的上边 findYearSupportByParams（）这个方法，但是传的object类型，报错，就改成这个方法了-->
+    <select id="selectTypeX" resultMap="BaseResultMap" flushCache="true" useCache="false">
+        SELECT AREA
+        ,ID
+        ,AREANAME
+        ,MDATE
+        ,RELATION_TYPE
+        ,RELATION_DEGREE
+        ,VER_TIME
+        FROM relation_support where area = #{area} and relation_type = #{type}
+        and mdate BETWEEN #{startYear} and #{endYear} and char_length(mdate) = 6 order by mdate;
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <select id="findValueByParams" resultType="java.math.BigDecimal" parameterType="Map">
+        SELECT
+        RELATION_DEGREE
+        FROM relation_support where RELATION_TYPE = #{relationType} and areaname = #{areaname} and mdate = #{mdateMonth}
+    </select>
+    <select id="findLowDateListByParams" resultType="java.lang.String" parameterType="Map">
+        select mdate
+        from relation_support
+        where relation_degree <![CDATA[ < ]]> 0
+        and relation_type = '最低温度'
+        and area = #{area}
+        and mdate like #{year}
+    </select>
+    <select id="findRainstormSupportByParams" resultType="com.dky.entity.RelationSupport" parameterType="Map">
+        SELECT RELATION_TYPE,RELATION_DEGREE
+        FROM relation_support
+        where
+            area = #{area}
+            AND mdate = #{mdate}
+            AND relation_type like '%-%'
+        order by relation_type
+    </select>
+</mapper>

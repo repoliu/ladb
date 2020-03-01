@@ -1,0 +1,34 @@
+#div {
+    position: absolute;
+    top: 95px;;
+    padding: 10px;
+}
+
+.draw_div {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    z-index: 52;
+}
+#zuoJinMing {
+    position: absolute;
+    top: 420px;
+}
+#shiJi {
+    position: absolute;
+    top: 480px;;
+}
+
+#queRen {
+    position: absolute;
+    top: 450px;
+}
+
+#tableF {
+    position: relative;
+    top: 500px;
+}
+
+#tableDiv {
+    margin-left: 10px;
+}

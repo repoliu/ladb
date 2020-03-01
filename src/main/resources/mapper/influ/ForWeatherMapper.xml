@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.ForWeatherMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.influ.ForWeather" >
+    <id column="AREA" property="area" jdbcType="INTEGER" />
+    <id column="MDATE" property="mdate" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="AREANAME" property="areaname" jdbcType="VARCHAR" />
+    <result column="WEATHER_TYPE" property="weatherType" jdbcType="VARCHAR" />
+    <result column="MAX_TEMPERATURE" property="maxTemperature" jdbcType="DECIMAL" />
+    <result column="MIN_TEMPERATURE" property="minTemperature" jdbcType="DECIMAL" />
+    <result column="RAINFALL" property="rainfall" jdbcType="VARCHAR" />
+    <result column="HUMIDITY" property="humidity" jdbcType="DECIMAL" />
+    <result column="WINDPOWER" property="windpower" jdbcType="INTEGER" />
+    <result column="WINDWAY" property="windway" jdbcType="VARCHAR" />
+    <result column="PRESSURE" property="pressure" jdbcType="DECIMAL" />
+    <result column="COSINESS" property="cosiness" jdbcType="VARCHAR" />
+    <result column="VER_TIME" property="verTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AREA, MDATE, ID, AREANAME, WEATHER_TYPE, MAX_TEMPERATURE, MIN_TEMPERATURE, RAINFALL, 
+    HUMIDITY, WINDPOWER, WINDWAY, PRESSURE, COSINESS, VER_TIME
+  </sql>
+  <sql id="View_Column_List" >
+    WEATHER_TYPE, MAX_TEMPERATURE, MIN_TEMPERATURE,
+    HUMIDITY, PRESSURE, COSINESS
+  </sql>
+  <select id="findForWeatherByKey" resultMap="BaseResultMap" parameterType="Map">
+    SELECT
+    <include refid="View_Column_List"/>
+    FROM for_weather
+    WHERE
+    mdate = #{mdate}
+    AND area = #{area}
+  </select>
+  <select id="isExist" resultType="java.lang.Integer" parameterType="Map">
+  select count(*) from for_weather
+  WHERE areaname = #{areaname}
+  AND mdate = #{mdate}
+</select>
+  <update id="updateByKey" parameterType="com.dky.entity.influ.ForWeather" >
+    update for_weather
+    set ID = #{id,jdbcType=BIGINT},
+    AREANAME = #{areaname,jdbcType=VARCHAR},
+    WEATHER_TYPE = #{weatherType,jdbcType=VARCHAR},
+    MAX_TEMPERATURE = #{maxTemperature,jdbcType=DECIMAL},
+    MIN_TEMPERATURE = #{minTemperature,jdbcType=DECIMAL},
+    RAINFALL = #{rainfall,jdbcType=VARCHAR},
+    HUMIDITY = #{humidity,jdbcType=DECIMAL},
+    WINDPOWER = #{windpower,jdbcType=INTEGER},
+    WINDWAY = #{windway,jdbcType=VARCHAR},
+    PRESSURE = #{pressure,jdbcType=DECIMAL},
+    COSINESS = #{cosiness,jdbcType=VARCHAR},
+    VER_TIME = #{verTime,jdbcType=DATE}
+    where AREA = #{area,jdbcType=INTEGER}
+    and MDATE = #{mdate,jdbcType=VARCHAR}
+  </update>
+  <insert id="insert" parameterType="com.dky.entity.influ.ForWeather" >
+    insert into for_weather (AREA, MDATE, ID,
+    AREANAME, WEATHER_TYPE, MAX_TEMPERATURE,
+    MIN_TEMPERATURE, RAINFALL, HUMIDITY,
+    WINDPOWER, WINDWAY, PRESSURE,
+    COSINESS, VER_TIME)
+    values (#{area,jdbcType=INTEGER}, #{mdate,jdbcType=VARCHAR}, #{id,jdbcType=BIGINT},
+    #{areaname,jdbcType=VARCHAR}, #{weatherType,jdbcType=VARCHAR}, #{maxTemperature,jdbcType=DECIMAL},
+    #{minTemperature,jdbcType=DECIMAL}, #{rainfall,jdbcType=VARCHAR}, #{humidity,jdbcType=DECIMAL},
+    #{windpower,jdbcType=INTEGER}, #{windway,jdbcType=VARCHAR}, #{pressure,jdbcType=DECIMAL},
+    #{cosiness,jdbcType=VARCHAR}, #{verTime,jdbcType=DATE})
+  </insert>
+</mapper>

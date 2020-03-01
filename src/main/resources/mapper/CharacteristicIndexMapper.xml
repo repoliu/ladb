@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.CharacteristicIndexMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.CharacteristicIndexBean" >
+        <result column="mdate" property="mdate" jdbcType="VARCHAR" />
+        <result column="dev_id" property="devId" jdbcType="VARCHAR" />
+        <result column="dev_descr" property="devDescr" jdbcType="VARCHAR" />
+        <result column="daytrait_type" property="daytraitType" jdbcType="VARCHAR" />
+        <result column="daytrait_value" property="daytraitValue" jdbcType="DECIMAL" />
+        <result column="ver_time" property="verTime" jdbcType="DATE" />
+        <result column="dt" property="dt" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        mdate,dev_id,dev_descr,daytrait_type,daytrait_value,ver_time,dt
+    </sql>
+
+    <select id="queryAllOne" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select <include refid="Base_Column_List"/> from busload_daytrait where daytrait_type in('日平均负荷')
+        and mdate = #{year}
+        order by daytrait_value;
+    </select>
+
+    <select id="queryAllTwo" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select <include refid="Base_Column_List"/> from busload_daytrait where daytrait_type in('负荷率')
+        and mdate = #{year}
+        order by daytrait_value;
+    </select>
+
+    <select id="queryAllThree" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select <include refid="Base_Column_List"/> from busload_daytrait where daytrait_type in('年最大负荷利用小时数')
+        and substr(mdate, 0,5) = #{year}
+        order by daytrait_value;
+    </select>
+
+    <select id="queryAllByAreaAndYearOne" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select a.dev_id as dev_id,a.mdate as mdate,a.dev_descr as dev_descr,a.daytrait_type as daytrait_type,a.daytrait_value as daytrait_value from busload_daytrait a
+        LEFT JOIN ldbusdvld b ON a.dev_id = b.ld_id
+        where mdate = #{year} and b.dcc1_descr = #{area}
+        and a.daytrait_type in('日平均负荷')
+        order by daytrait_value;
+    </select>
+
+    <select id="queryAllByAreaAndYearTwo" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select a.dev_id as dev_id,a.mdate as mdate,a.dev_descr as dev_descr,a.daytrait_type as daytrait_type,a.daytrait_value as daytrait_value from busload_daytrait a
+        LEFT JOIN ldbusdvld b ON a.dev_id = b.ld_id
+        where mdate = #{year} and b.dcc1_descr = #{area}
+        and a.daytrait_type in('负荷率')
+        order by daytrait_value;
+    </select>
+
+    <select id="queryAllByAreaAndYearThree" resultMap="BaseResultMap" parameterType="com.dky.entity.CharacteristicIndexBean">
+        select a.dev_id as dev_id,a.mdate as mdate,a.dev_descr as dev_descr,a.daytrait_type as daytrait_type,a.daytrait_value as daytrait_value from busload_daytrait a
+        LEFT JOIN ldbusdvld b ON a.dev_id = b.ld_id
+        where substr(a.mdate, 0,5) = #{year} and b.dcc1_descr = #{area}
+        and a.daytrait_type in('年最大负荷利用小时数')
+        order by daytrait_value;
+    </select>
+
+    <select id="selectMaxDate" resultType="java.lang.String" >
+        select max(dt) from busload_daytrait;
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.DefineIndexMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.DefineBean" >
+        <result column="define_id" property="defineId" jdbcType="VARCHAR" />
+        <result column="app_module" property="appModule" jdbcType="VARCHAR" />
+        <result column="fun_component" property="funComponent" jdbcType="VARCHAR" />
+        <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+        <result column="service_number" property="serviceNumber" jdbcType="VARCHAR" />
+        <result column="program_name" property="programName" jdbcType="VARCHAR" />
+        <result column="ver_time" property="verTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        define_id,app_module,fun_component,service_name,service_number,program_name,ver_time
+    </sql>
+
+    <select id="queryAll" resultMap="BaseResultMap" parameterType="com.dky.entity.DefineBean">
+        select <include refid="Base_Column_List"/> from define order by ver_time DESC;
+    </select>
+
+    <select id="queryAllById" resultMap="BaseResultMap" parameterType="com.dky.entity.DefineBean">
+        select <include refid="Base_Column_List"/> from define WHERE define_id = #{id} order by ver_time DESC;
+    </select>
+
+    <insert id="insertDefineBean" parameterType="com.dky.entity.DefineBean">
+        insert into define
+        VALUES  (
+        #{appModule,jdbcType=VARCHAR},
+        #{funComponent,jdbcType=VARCHAR},
+        #{serviceName,jdbcType=VARCHAR},
+        #{serviceNumber,jdbcType=VARCHAR},
+        #{programName,jdbcType=VARCHAR},
+        #{defineId,jdbcType=VARCHAR},
+        #{verTime,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

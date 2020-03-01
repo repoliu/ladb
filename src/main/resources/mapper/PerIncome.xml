@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.PerIncomeMapper" >
+
+    <resultMap id="BaseResultMap" type="com.dky.entity.PerIncome" >
+        <result column="areaname" property="areaName" jdbcType="VARCHAR" />
+        <result column="mdate" property="mDate" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="per_income" property="perIncome" jdbcType="DECIMAL" />
+    </resultMap>
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.PerIncome">
+        SELECT  areaname,mdate,per_income   FROM  per_income  where 1=1
+        <if test="minDate!=null">
+            and mdate <![CDATA[ >= ]]> #{minDate,jdbcType=VARCHAR}
+        </if>
+        <if test="mDate!=null">
+            and mdate <![CDATA[ <= ]]> #{mDate,jdbcType=VARCHAR}
+        </if>
+        <if test="areaName!=null">
+            and areaname = #{areaName,jdbcType=VARCHAR}
+        </if>
+        order  by  mdate  asc
+    </select>
+    <insert id="insert" parameterType="com.dky.entity.PerIncome">
+        INSERT  into per_income (areaname,mdate,per_income,unit )
+        VALUES (
+         #{areaName,jdbcType=VARCHAR}
+        ,#{mDate,jdbcType=VARCHAR}
+        ,#{perIncome,jdbcType=DECIMAL}
+        ,#{unit,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

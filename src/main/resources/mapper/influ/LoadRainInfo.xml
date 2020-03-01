@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.LoadRainInfoMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.influ.LoadRainInfo">
+        <id column="TIME" property="time" jdbcType="TIMESTAMP"/><!-- 时间 -->
+        <id column="areaname" property="areaname" jdbcType="VARCHAR"/><!-- 地区名称 -->
+        <result column="TEMPERATURE" property="temperature" jdbcType="SMALLINT"/><!-- 温度 -->
+        <result column="RAIN" property="rain" jdbcType="SMALLINT"/><!-- 降雨量 -->
+        <result column="WP" property="wp" jdbcType="SMALLINT"/><!--风力  -->
+        <result column="rain_day" property="rainDay" jdbcType="SMALLINT"/><!--全天降雨量  -->
+        <result column="rain_leve" property="rainLeve" jdbcType="VARCHAR"/><!--降雨级别  -->
+    </resultMap>
+    <sql id="Base_Column_List">
+        TIME, areaname, TEMPERATURE, RAIN,   WP,rain_day,rain_leve
+    </sql>
+    <insert id="insert" parameterType="List">
+        insert INTO load_rain_info (time , areaname,TEMPERATURE, RAIN , WP ,rain_day ,rain_leve )VALUES
+        <foreach collection="list" item="loadRainInfo" index="index" separator=",">
+            (
+            #{loadRainInfo.time,jdbcType=TIMESTAMP}
+            ,#{loadRainInfo.areaname,jdbcType=VARCHAR}
+            ,#{loadRainInfo.temperature,jdbcType=SMALLINT}
+            ,#{loadRainInfo.rain,jdbcType=SMALLINT}
+            ,#{loadRainInfo.wp,jdbcType=SMALLINT}
+            ,#{loadRainInfo.rainDay,jdbcType=SMALLINT}
+            ,#{loadRainInfo.rainLeve,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <select id="select" resultMap="BaseResultMap" parameterType="com.dky.entity.influ.LoadRainInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM load_rain_info where 1=1
+        and to_char(time,'yyyy')=#{stringDate,jdbcType=VARCHAR} AND areaname=#{areaname,jdbcType=VARCHAR}
+        <if test="rainLeve!=null">
+            and rain_leve =#{rainLeve,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+
+    <select id="selectCopy" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM load_rain_info where 1=1
+        and to_char(time,'yyyy')=#{stringDate} AND areaname=#{areaname}
+        <if test="rainLeve!=null">
+            and rain_leve =#{rainLeve}
+        </if>
+    </select>
+
+
+
+
+    <delete id="delete" parameterType="com.dky.entity.influ.LoadRainInfo">
+        <!--   SELECT  DELETE FROM load_rain_info WHERE
+           to_char(time,'yyyy')=to_char(#{time,jdbcType=TIMESTAMP},'yyyy')
+           <if test="rainLeve!=null">
+               and rain_leve =#{rainLeve,jdbcType=VARCHAR}
+           </if>
+
+   -->
+        <!--    <if test="rain!=null and rain!=''">
+                select delete('loadfor','load_rain_info',
+                ' time  <![CDATA[ >= ]]>  to_timestamp(${dateTimeMin})  and  time  <![CDATA[ < ]]> to_timestamp(${dateTimeMax})
+                and rain_leve = (SELECT level_name from load_rain_level WHERE rain_min = ${rain})')
+            </if>
+
+            <if test="rain==null or rain==''">
+                select delete('loadfor','load_rain_info',
+                select delete('loadfor','load_rain_info',
+                ' time  <![CDATA[ >= ]]>  to_timestamp(${dateTimeMin})  and  time  <![CDATA[ < ]]> to_timestamp(${dateTimeMax})')
+            </if>
+    -->
+
+        select ${model}.delete('${model}','load_rain_info','to_char(time,''yyyy'')=''${stringDate}'' and areaname=''${areaname}''');
+    </delete>
+
+
+
+
+    <delete id="deletes" >
+
+
+        select ${model}.delete('${model}','load_rain_info','to_char(time,''yyyy'')=''${stringDate}'' and areaname=''${areaname}''');
+    </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <select id="selectDayNumber" resultMap="BaseResultMap" parameterType="com.dky.entity.influ.LoadRainInfo">
+         select count(*) rain,rain_leve from (select  distinct date(time),rain_leve    from load_rain_info   where 1=1
+         and to_char(time,'yyyy')=#{stringDate,jdbcType=VARCHAR}
+         and areaname=#{areaname,jdbcType=VARCHAR} ) a  group by rain_leve
+    </select>
+
+
+</mapper>

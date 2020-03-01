@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.AirConditionerLoadMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.LoadAirconditionerAnalysis">
+        <id column="AREA" property="area" jdbcType="INTEGER"/>
+        <id column="MDATE" property="mdate" jdbcType="VARCHAR"/>
+        <result column="aday" property="aday" jdbcType="VARCHAR"/>
+        <result column="bday" property="bday" jdbcType="DECIMAL"/>
+        <result column="cday" property="cday" jdbcType="VARCHAR"/>
+        <result column="result_type" property="resultType" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="DECIMAL"/>
+        <result column="VER_TIME" property="verTime" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="findLastMdateByArea" resultType="java.lang.String" parameterType="java.lang.Integer">
+        SELECT max(mdate) FROM load_airconditioner_analysis WHERE AREA = #{area}
+    </select>
+
+    <select id="selectMaxProportion" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT result FROM load_airconditioner_analysis where area = #{area} and mdate = #{mdate} and result_type = '空调负荷最大占比'
+        order by mdate;
+    </select>
+
+    <select id="selectMaxEnergy" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT mdate,result FROM load_airconditioner_analysis where area = #{area} and mdate in(${mdate}) and result_type = '空调负荷最大电量'
+        order by mdate desc;
+    </select>
+
+    <select id="selectMaxEnergyByDay" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT mdate,result FROM load_airconditioner_analysis where area = #{area} and mdate in(${mdate}) and result_type = '空调负荷占比最大日电量'
+        order by mdate desc;
+    </select>
+
+    <select id="selectMaxLoad" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT result,mdate FROM load_airconditioner_analysis where area = #{area} and mdate in(${mdate}) and result_type = '空调负荷占比最大日最大负荷'
+        order by mdate desc;
+    </select>
+
+    <select id="selectMaxLoadByLoadDaytrait" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT max(b.maxload) as result,a.mdate as mdate FROM load_airconditioner_analysis a LEFT JOIN load_daytrait b ON a.area = b.area
+        where a.area = #{area} and a.mdate in(${mdate}) GROUP BY a.mdate order by mdate desc;
+    </select>
+
+    <select id="selectMinLoadByLoadDaytrait" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAirconditionerAnalysis">
+        SELECT min(b.maxload) as result,a.mdate as mdate FROM load_airconditioner_analysis a LEFT JOIN load_daytrait b ON a.area = b.area
+        where a.area = #{area} and a.mdate in(${mdate}) GROUP BY a.mdate order by mdate desc;
+    </select>
+
+</mapper>

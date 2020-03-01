@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.period.CommonMapper">
+    <resultMap id="ReturnMap" type="java.util.HashMap">
+        <result property="key" column="startyear"/>
+        <result property="value" column="endyear"/>
+    </resultMap>
+    <select id="findAllTypeOfHoliday" resultType="java.lang.String">
+
+        SELECT
+		 HOLNAME
+        FROM holiday
+				GROUP BY holname
+        ORDER BY min(STARTDAY)
+    </select>
+    <select id="findHolidayByParams" resultType="com.dky.entity.period.Holiday" parameterType="Map">
+        SELECT
+            MYEAR,
+            STARTDAY,
+            ENDDAY,
+            DAYS
+        FROM holiday
+        WHERE HOLNAME = #{holiday} AND MYEAR BETWEEN #{startYear} AND #{endYear}
+        ORDER BY MYEAR
+    </select>
+    <select id="findStartAndEndYear" resultType="Map">
+        SELECT min(MYEAR) AS startyear,max(MYEAR) AS endyear
+        FROM holiday
+    </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.BusloadTypeSupportMapper" >
+    <resultMap id="BaseResultMap" type="com.dky.entity.BusloadTypeSupport" >
+        <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+        <result column="busload_type" property="busloadType" jdbcType="VARCHAR" />
+        <result column="dcc_descr" property="dccDescr" jdbcType="VARCHAR" />
+        <result column="relation_degree" property="relationDegree" jdbcType="DECIMAL" />
+        <result column="ver_time" property="verTime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="TreeNeed_Column_List">
+        create_date, busload_type, dcc_descr,relation_degree
+    </sql>
+    <select id="selectAreaDate" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select   <include refid="TreeNeed_Column_List" /> from busload_type_support where
+        SUBSTRING(create_date,0,5)= #{createDate} and busload_type=#{busloadType}
+        AND  dcc_descr =#{dccDescr}
+        ORDER  BY create_date  ASC
+    </select>
+
+    <select id="selectListAreaDate" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select   create_date,busload_type,avg(relation_degree) relation_degree
+        from busload_type_support where busload_type=#{busloadType}
+        AND SUBSTRING(create_date,0,5)= #{createDate}
+        AND  dcc_descr in
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+        group by create_date,busload_type
+        ORDER  BY create_date  ASC;
+    </select>
+
+    <select id="selectMaxDate" resultType="java.lang.String" >
+        select   max(create_date) from busload_type_support where       dcc_descr in
+
+
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+
+    </select>
+
+</mapper>

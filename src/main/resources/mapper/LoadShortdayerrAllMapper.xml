@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.LoadShortdayerrAllMapper">
+
+    <select id="selectLoadShortdayerr" resultType="com.dky.entity.LoadShortdayerrAll" parameterType="Map">
+        select a.err as err,b.algo_name as algoName from load_shortdayerr_all a
+        left join load_algo b on a.algo_id = b.id
+        left join dbarea c on a.area = c.area
+        where a.mdate = #{mdate} and a.area = #{area}
+        order by err
+    </select>
+
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.BusHisdataBeanMapper">
+
+    <select id="selectBusHisdata"  resultType="com.dky.entity.BusHisdataBean" parameterType="Map">
+        select * from   ${tmpTableName}
+        where
+        <if test="id!=null and id!=''">
+              id = #{id}
+        </if>
+        <if test="mdate!=null and mdate!=''">
+            and mdate = #{mdate}
+        </if>
+    </select>
+
+    <select id="selectBusParamHisdata"  resultType="com.dky.entity.BusHisdataBean" parameterType="Map">
+        select * from   ${tmpTableName}
+        where
+        <if test="id!=null and id!=''">
+            id = #{id}
+        </if>
+        <if test="mdate==null || mdate==''">
+            and mdate = (select  max(mdate) from ${tmpTableName})
+        </if>
+        <if test="mdate!=null and mdate!=''">
+            and mdate = #{mdate}
+        </if>
+
+        <if test="contion!=null and contion!=''">
+            ${contion}
+        </if>
+
+    </select>
+
+    <select id="selectHisdataByTime"  resultType="com.dky.entity.BusHisdataBean" parameterType="Map">
+        select * from   ${tmpTableName}
+        where 1=1
+        <if test="mdate=='' ||mdate==null">
+         and  mdate =(select  max(mdate) from ${tmpTableName})
+        </if>
+        <if test="mdate!='' and province!=null">
+         and   mdate = #{mdate}
+        </if>
+        <if test="province!=null and province!=''">
+           and  substring(DESCR,0,position('.' in DESCR) )=#{province}
+        </if>
+
+    </select>
+
+
+    <select id="count"  resultType="Integer" parameterType="Map">
+        select count(*) from   ${tmpTableName}
+        where 1=1
+        <if test="mdate=='' ||mdate==null">
+            and  mdate =(select  max(mdate) from ${tmpTableName})
+        </if>
+        <if test="mdate!='' and mdate!=null">
+            and  mdate =#{mdate}
+        </if>
+
+        <if test="province!=null and province!=''">
+            and  substring(DESCR,0,position('.' in DESCR) )=#{province}
+        </if>
+        and source='ss' and flag='w';
+
+    </select>
+
+    <select id="province"  resultType="java.lang.String" parameterType="Map">
+        select distinct substring(DESCR,0,position('.' in DESCR) ) from   ${tmpTableName}
+        where 1=1
+        <if test="mdate=='' ||mdate==null">
+            and  mdate =(select  max(mdate) from ${tmpTableName})
+        </if>
+        <if test="mdate!=''and mdate!=null">
+            and  mdate =#{mdate}
+        </if>
+        and source='ss' and flag='w';
+
+    </select>
+
+
+</mapper>

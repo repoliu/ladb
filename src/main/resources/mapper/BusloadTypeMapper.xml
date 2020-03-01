@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.BusloadTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.BusloadType" >
+    <result column="dev_id" property="devId" jdbcType="VARCHAR" />
+    <result column="dev_descr" property="devDescr" jdbcType="VARCHAR" />
+    <result column="busload_type" property="busloadType" jdbcType="VARCHAR" />
+    <result column="dcc_descr" property="dccDwscr" jdbcType="VARCHAR" />
+    <result column="type_degree" property="typeDegree" jdbcType="DECIMAL" />
+    <result column="ver_time" property="verTime" jdbcType="DATE" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    dev_id,dev_descr,busload_type,dcc_descr,type_degree,ver_time
+  </sql>
+
+
+  <select id="selectData" resultMap="BaseResultMap" >
+    select  <include refid="Base_Column_List"/>  from busload_type  where dcc_descr=#{dccDwscr,jdbcType=VARCHAR}
+    <if test="busloadType!=null">
+      and busload_type =#{busloadType,jdbcType=VARCHAR}
+    </if>
+    ORDER BY type_degree desc
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.dky.entity.BusloadType">
+    select  count(dev_id) from busload_type  where dcc_descr=#{dccDwscr,jdbcType=VARCHAR}
+    <if test="busloadType!=null">
+      and busload_type =#{busloadType,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+    <!--查某种负荷类型的数据条数，多个地区-->
+    <select id="selectCountAreaAll" resultType="java.lang.Integer" >
+        select  count(*) from busload_type where dcc_descr in
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+        <if test="busloadType!=null">
+            and busload_type =#{busloadType,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+    <!--查某种负荷类型的数据条数，单个地区-->
+    <select id="selectCountAreaAllSingle" resultType="java.lang.Integer" >
+        select  count(*) from busload_type where dcc_descr =  '${dccDwscr}'       and busload_type ='${busloadType}'
+
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <select id="selectArea"  resultMap="BaseResultMap"  parameterType="java.lang.String">
+      select distinct  dev_id   from busload_type  where busload_type in ('降雨敏感型负荷','温度敏感型负荷') and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}
+      and dev_id in (select distinct  dev_id   from busload_type  where busload_type ='空调负荷' and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectWDJY" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select    count(dev_id)  from busload_type  where busload_type  in (#{three,jdbcType=VARCHAR} ,#{two,jdbcType=VARCHAR})
+    and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}    and     dev_id in
+    (select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR} and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectWDJYFather" resultType="java.lang.Integer"  >
+    select    count(dev_id)  from busload_type  where busload_type  not in (#{three,jdbcType=VARCHAR} ,#{two,jdbcType=VARCHAR})
+    and   dcc_descr in
+    <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach> and     dev_id in
+    (select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR} and   dcc_descr in
+    <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach> )
+  </select>
+
+
+  <select id="selectJY_KT"  resultType="java.lang.Integer" parameterType="java.lang.String">
+      select  count(dev_id)      from busload_type  where busload_type  =#{three,jdbcType=VARCHAR}          and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}  and  dev_id in
+      (
+            select   distinct dev_id  from busload_type  where busload_type  =#{two,jdbcType=VARCHAR}       and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}  and dev_id in
+            (
+                  select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR}  and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}
+            )
+      )
+  </select>
+
+
+  <select id="selectJY_KTFather"  resultType="java.lang.Integer" >
+    select  count(dev_id)      from busload_type  where busload_type  !=#{three,jdbcType=VARCHAR}          and   dcc_descr IN
+    <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach>
+    and  dev_id in(
+        select   distinct dev_id  from busload_type  where busload_type  =#{two,jdbcType=VARCHAR}       and   dcc_descr IN
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+          #{dccDwscr}
+        </foreach> and dev_id in
+        (
+                select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR}  and   dcc_descr in
+                <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+                  #{dccDwscr}
+                </foreach>
+        )
+    )
+  </select>
+
+  <select id="selectKTWD"  resultType="java.lang.Integer" parameterType="java.lang.String">
+    select   count(dev_id)  from busload_type  where busload_type  =#{two,jdbcType=VARCHAR}        and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}  and dev_id in
+    (
+        select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR}  and   dcc_descr=#{dccDwscr,jdbcType=VARCHAR}
+    )
+  </select>
+
+
+  <select id="selectKTWDFather"  resultType="java.lang.Integer">
+    select   count(dev_id)  from busload_type  where busload_type  =#{two,jdbcType=VARCHAR}        and   dcc_descr in
+    <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach>
+    and dev_id in
+    (
+    select distinct  dev_id   from busload_type  where busload_type =#{one,jdbcType=VARCHAR}  and   dcc_descr in
+    <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach>
+    )
+  </select>
+
+
+
+   <!--这个方法是选择的地区不是最有一级的时候用的，分类数据查询table也  -->
+  <select id="selectAllArea" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List"/>  from busload_type  where dcc_descr  in
+    <foreach collection="listString" item="dccDwscr" open="(" close=")" separator=",">
+      #{dccDwscr}
+    </foreach>
+    <if test="busloadType!=null">
+      and busload_type =#{busloadType,jdbcType=VARCHAR}
+    </if>
+    ORDER BY dcc_descr,type_degree desc
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <insert id="insert" parameterType="com.dky.entity.BusloadType">
+    INSERT  INTO busload_type  (dev_id,dev_descr,busload_type,dcc_descr,ver_time)
+
+    VALUES (
+      #{    devId   ,jdbcType=VARCHAR},
+      #{    devDescr   ,jdbcType=VARCHAR},
+      #{    busloadType   ,jdbcType=VARCHAR},
+      #{    dccDwscr   ,jdbcType=VARCHAR},
+      #{    verTime   ,jdbcType=DATE}
+    )
+
+
+
+
+
+  </insert>
+
+
+
+
+
+
+
+
+
+  <!-- 这个是求降雨的数量 【这个查多个地区的】-->
+  <select id="selectJiangYu" resultType="java.lang.Integer">
+              select  COUNT(*)  from  busload_type where busload_type='${one}'
+              and dev_id not in
+              (
+						select DISTINCT  a.dev_id from
+						(select DISTINCT dev_id ,dcc_descr from busload_type where busload_type='${one}') a  ,(select DISTINCT dev_id from busload_type where busload_type='${two}') b
+						where a.dev_id=b.dev_id  	and  a.dcc_descr in
+                            <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+                              #{dccDwscr}
+                            </foreach>
+              )
+  </select>
+
+
+
+    <!-- 这个是求降雨的数量 【这个查单个地区的】-->
+    <select id="selectJiangYuSingle" resultType="java.lang.Integer">
+        select  COUNT(*)  from  busload_type where busload_type='${one}'
+        and dev_id not in
+        (
+        select DISTINCT  a.dev_id from
+        (select DISTINCT dev_id ,dcc_descr from busload_type where busload_type='${one}') a  ,(select DISTINCT dev_id from busload_type where busload_type='${two}') b
+        where a.dev_id=b.dev_id  	and  a.dcc_descr ='${dccDwscr}'
+        )
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--这个是求某两个负荷类型有交集的数量 【多个地区】 -->
+    <select id="selectIntersection" resultType="java.lang.Integer">
+        select  COUNT(*)  from
+        (select DISTINCT dev_id ,dcc_descr from busload_type where busload_type='${one}') a  ,(select DISTINCT dev_id from busload_type where busload_type='${two}') b
+        where a.dev_id=b.dev_id  	and  a.dcc_descr in
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+    </select>
+
+
+
+    <!--这个是求某两个负荷类型有交集的数量 【单个地区】 -->
+    <select id="selectIntersectionSingle" resultType="java.lang.Integer">
+        select  COUNT(*)  from
+        (select DISTINCT dev_id ,dcc_descr from busload_type where busload_type='${one}') a  ,(select DISTINCT dev_id from busload_type where busload_type='${two}') b
+        where a.dev_id=b.dev_id  	and  a.dcc_descr='{dccDwscr}'
+
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

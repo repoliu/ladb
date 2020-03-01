@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.AutovalueMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.influ.Autovalue">
+        <id column="TIME" property="time" jdbcType="TIMESTAMP"/>
+        <id column="STCD" property="stcd" jdbcType="VARCHAR"/>
+        <result column="TEMPERATURE" property="temperature" jdbcType="SMALLINT"/>
+        <result column="RAIN" property="rain" jdbcType="SMALLINT"/>
+        <result column="ENPRESURE" property="enpresure" jdbcType="SMALLINT"/>
+        <result column="WP" property="wp" jdbcType="SMALLINT"/>
+        <result column="WD" property="wd" jdbcType="SMALLINT"/>
+        <result column="HUMIDITY" property="humidity" jdbcType="SMALLINT"/>
+        <result column="VTYPE" property="vtype" jdbcType="SMALLINT"/>
+    </resultMap>
+    <resultMap id="FileMap" type="java.util.HashMap">
+        <id column="TIME" property="time" jdbcType="TIMESTAMP"/>
+        <id column="STCD" property="stcd" jdbcType="VARCHAR"/>
+        <result column="TEMPERATURE" property="temperature" jdbcType="SMALLINT"/>
+        <result column="RAIN" property="rain" jdbcType="SMALLINT"/>
+        <result column="ENPRESURE" property="enpresure" jdbcType="SMALLINT"/>
+        <result column="WP" property="wp" jdbcType="SMALLINT"/>
+        <result column="WD" property="wd" jdbcType="SMALLINT"/>
+        <result column="HUMIDITY" property="humidity" jdbcType="SMALLINT"/>
+        <result column="VTYPE" property="vtype" jdbcType="SMALLINT"/>
+    </resultMap>
+    <resultMap id="ReturnMap" type="java.util.HashMap">
+        <result property="key" column="time"/>
+        <result property="value" column="value"/>
+    </resultMap>
+    <resultMap id="ReturnList" type="java.util.HashMap">
+        <result property="time" column="time"/>
+        <result property="value" column="value"/>
+        <result property="cValue" column="cValue"/>
+        <result property="minValue" column="minValue"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        TIME, STCD, TEMPERATURE, RAIN, ENPRESURE, WP, WD, HUMIDITY, VTYPE
+    </sql>
+    <select id="select" resultMap="BaseResultMap">
+        SELECT TIME, STCD, TEMPERATURE, RAIN, ENPRESURE, WP, WD, HUMIDITY, VTYPE FROM  autovalue limit 10000 offset 0
+    </select>
+    <insert id="insert" parameterType="com.dky.entity.influ.Autovalue">
+        INSERT INTO  autovalue  (TIME, STCD, TEMPERATURE, RAIN, ENPRESURE, WP, WD, HUMIDITY, VTYPE )
+        VALUES (
+        #{time,jdbcType=TIMESTAMP},
+        #{stcd,jdbcType=VARCHAR},
+        #{temperature,jdbcType=SMALLINT},
+        #{rain,jdbcType=SMALLINT},
+        #{enpresure,jdbcType=SMALLINT},
+        #{wp,jdbcType=SMALLINT},
+        #{wd,jdbcType=SMALLINT},
+        #{humidity,jdbcType=SMALLINT},
+        #{vtype,jdbcType=SMALLINT}
+        )
+    </insert>
+
+
+
+    <select id="findValueMapByParams" parameterType="Map" resultMap="ReturnMap">
+        select time ,
+            ${type} as value
+        FROM autovalue
+        WHERE
+        date(TIME) = #{mdate}
+        AND stcd = (SELECT stcd
+        FROM qstation
+        WHERE
+        stnm = (SELECT dname
+        FROM dbarea
+        WHERE
+        area = #{area}))
+        ORDER BY TIME
+    </select>
+    <select id="selectRain" parameterType="com.dky.entity.influ.Autovalue" resultMap="BaseResultMap">
+        /*第一层sql*/ /* b.wd是代表了全天的降雨量*/
+        select distinct a.TIME, a.TEMPERATURE, a.RAIN, a.ENPRESURE, a.WP, a.HUMIDITY , b.level_name stcd ,b.wd from autovalue a,(
+        /*第二层sql*/ /* b.wd是代表了全天的降雨量*/
+        select b.rain,b.time ,a.level_name ,b.wd from load_rain_level a, (
+        /*第三层sql*/ /* wd是代表了全天的降雨量，是在这一步对全天的雨量进行的求和*/
+        select sum(a.rain) rain,date(a.time) time ,sum(a.rain) wd from autovalue a where a.stcd=#{stcd,jdbcType=VARCHAR}
+        and to_char(time,'yyyy')=#{stringDate,jdbcType=VARCHAR} and a.rain>0 group by date(time)
+        order by time asc
+        ) b where 1=1
+        <if test="rainMin!=null">
+            and b.rain/10 <![CDATA[ >= ]]> #{rainMin,jdbcType=DECIMAL} and a.rain_min =#{rainMin,jdbcType=DECIMAL}
+        </if>
+        <if test="rainMax!=null">
+            and b.rain/10 <![CDATA[ <= ]]> #{rainMax,jdbcType=DECIMAL} and a.rain_max=#{rainMax,jdbcType=DECIMAL}
+        </if>
+        <if test="rainMin==null">/* 这个rainMin和rainMax是同时传过来的，要不都为空，要不都不为空*/
+            and b.rain/10 <![CDATA[ >= ]]> a.rain_min and b.rain/10 <![CDATA[ <= ]]> a.rain_max
+        </if>
+        order by date(b.time)
+        ) b where stcd=#{stcd,jdbcType=VARCHAR} and
+        to_char(a.time,'yyyy')=
+        #{stringDate,jdbcType=VARCHAR}
+        and date(a.time)=date(b.time) and a.rain>0 order by a.time ASC
+    </select>
+    <!--不同降雨量的天数查询-->
+    <select id="selectRainDay" resultMap="BaseResultMap" parameterType="com.dky.entity.influ.Autovalue">
+        SELECT
+            count(*)     rain,
+            a.level_name stcd
+        FROM load_rain_level a, (
+                                    SELECT
+                                        sum(a.rain)  rain,
+                                        date(a.time) time,
+                                        sum(a.rain)  wd
+                                    FROM autovalue a
+                                    WHERE a.stcd = #{stcd,jdbcType=VARCHAR}
+                                          and to_char(time,'yyyy')=#{stringDate,jdbcType=VARCHAR}
+                                          AND a.rain > 0
+                                    GROUP BY date(time)
+                                ) b
+        WHERE 1 = 1 AND b.rain / 10 <![CDATA[ >= ]]> a.rain_min AND b.rain / 10 <![CDATA[ <= ]]> a.rain_max
+        GROUP BY to_char(time,'yyyy'), a.level_name
+    </select>
+    <!--天数查询-->
+    <select id="selectRainNumber" resultType="java.lang.String" parameterType="com.dky.entity.influ.Autovalue">
+        /*第一层sql*/
+        select COUNT (a.rain) from autovalue a,(
+        /*第二层sql*/
+        select b.rain,b.time from load_rain_level a, (
+        /*第三层sql*/
+        select sum(a.rain) rain,date(a.time) time from autovalue a where a.stcd=#{stcd,jdbcType=VARCHAR}
+        and to_char(time,'yyyy')=#{stringDate,jdbcType=VARCHAR}
+        and a.rain>0 group by date(time)
+        order by time asc
+        ) b where 1=1
+        <if test="rainMin!=null">
+            and b.rain/10 <![CDATA[ >= ]]> #{rainMin,jdbcType=DECIMAL} and a.rain_min =#{rainMin,jdbcType=DECIMAL}
+        </if>
+        <if test="rainMax!=null">
+            and b.rain/10 <![CDATA[ <= ]]> #{rainMax,jdbcType=DECIMAL} and a.rain_max=#{rainMax,jdbcType=DECIMAL}
+        </if>
+        <if test="rainMin==null">
+            and b.rain/10 <![CDATA[ >= ]]> a.rain_min and b.rain/10 <![CDATA[ <= ]]> a.rain_max
+        </if>
+        ) b where stcd=#{stcd,jdbcType=VARCHAR}
+        and to_char(a.time,'yyyy')=#{stringDate,jdbcType=VARCHAR}
+        and date(a.time)=date(b.time) and a.rain>0 group by to_char(a.time,'yyyy')
+    </select>
+    <select id="findMaxMdateByArea" resultType="java.util.Date" parameterType="java.lang.Integer">
+        SELECT time
+        FROM autovalue
+        WHERE
+            stcd = (SELECT stcd
+                    FROM qstation
+                    WHERE
+                        stnm = (SELECT dname
+                                FROM dbarea
+                                WHERE
+                                    area = #{area}))
+        ORDER BY time DESC
+        LIMIT 1 offset 0
+    </select>
+    <select id="findListByTimeAndStcd" resultMap="BaseResultMap" parameterType="Map">
+        SELECT
+            TIME,
+            TEMPERATURE,
+            RAIN,
+            WP,
+            WD,
+            HUMIDITY
+        FROM autovalue
+        WHERE
+            TIME BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+                                                           AND STCD = #{stcd,jdbcType=VARCHAR}
+        ORDER BY TIME
+    </select>
+    <select id="findAssignTypeListByParams" resultType="com.dky.entity.influ.vo.RelationValue" parameterType="Map">
+        SELECT
+            Date(time)   AS dayTime,
+            max(${type}) AS value
+        FROM autovalue
+        WHERE
+            stcd = (SELECT stcd
+                    FROM qstation
+                    WHERE
+                        stnm = (SELECT dname
+                                FROM dbarea
+                                WHERE
+                                    area = #{area}))
+            AND DATE(time) BETWEEN #{minMdateH} AND #{mdateH}
+        GROUP BY Date(time)
+        ORDER BY Date(time) DESC
+    </select>
+    <select id="findOneDayWeatherByParams" parameterType="Map" resultType="com.dky.entity.influ.vo.WeatherInfo">
+        SELECT
+            Date(time)       AS time,
+            max(temperature) AS maxTemp,
+            min(temperature) AS minTemp,
+            avg(temperature) AS avgTemp,
+            avg(wp)          AS avgWp,
+            max(wp)          AS maxWp,
+            min(wp)          AS minWp,
+            avg(humidity)    AS humidity,
+            sum(rain)         AS rainfall
+        FROM autovalue
+        WHERE
+            stcd = (SELECT stcd
+                    FROM qstation
+                    WHERE
+                        stnm = (SELECT dname
+                                FROM dbarea
+                                WHERE
+                                    area = #{area}))
+            AND DATE(TIME) = #{mdateH}
+        GROUP BY DATE(TIME)
+    </select>
+    <select id="findWeatherInfosByParams" parameterType="Map" resultType="com.dky.entity.influ.vo.WeatherInfo">
+        SELECT
+            Date(time)       AS time,
+            max(temperature) AS maxTemp,
+            min(temperature) AS minTemp,
+            avg(temperature) AS avgTemp,
+            avg(wp)          AS avgWp,
+            max(wp)          AS maxWp,
+            min(wp)          AS minWp,
+            avg(humidity)    AS humidity
+        FROM autovalue
+        WHERE
+            stcd = (SELECT stcd
+                    FROM qstation
+                    WHERE
+                        stnm = (SELECT dname
+                                FROM dbarea
+                                WHERE
+                                    area = #{area}))
+            AND DATE(TIME) BETWEEN #{minMdateH} AND #{mdateH}
+        GROUP BY DATE(TIME)
+        ORDER BY DATE(time) DESC
+    </select>
+    <select id="findOnesByParams" parameterType="Map" resultMap="ReturnList">
+        SELECT a.time as time,a.value as VALUE,b.maxValue-b.minValue as cValue , b.minValue as minValue
+        from (SELECT DISTINCT TIME as TIME ,${name} as VALUE
+              FROM autovalue
+              WHERE stcd = (SELECT stcd
+                            FROM qstation
+                            WHERE
+                                stnm = (SELECT dname
+                                        FROM dbarea
+                                        WHERE
+                                            area = #{area}))
+                    AND TIME BETWEEN #{startdate} AND #{enddate}) a,
+            (SELECT max(${name}) as maxValue,min(${name}) as minValue,
+                    avg(${name}) as avgValue
+             FROM autovalue
+             WHERE stcd = (SELECT stcd
+                           FROM qstation
+                           WHERE
+                               stnm = (SELECT dname
+                                       FROM dbarea
+                                       WHERE
+                                           area = #{area}))
+                   AND TIME BETWEEN #{startdate} AND #{enddate}) b
+        order by a.time
+    </select>
+    <select id="insertIntoFile" resultMap="FileMap">
+        select distinct * from "EMSHIS"."LOADFOR"."autovalue4"  order by time;
+    </select>
+    <select id="selectDateTime" resultMap="BaseResultMap" >
+        select distinct * from autovalue WHERE stcd='${stcd}'
+        AND  time NOT  IN
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+    </select>
+
+
+
+
+    <select id="selerain"  resultMap="BaseResultMap">
+
+
+select * from autovalue where rain>0  limit 6
+
+
+    </select>
+</mapper>

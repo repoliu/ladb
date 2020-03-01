@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.DbAreaBeanMapper">
+
+    <select id="selectDbArea"  resultType="com.dky.entity.Dbarea" parameterType="String">
+        select  *  from  dbarea  where area>0  order by area ;
+    </select>
+
+    <select id="selectPowerStation"  resultType="String"  parameterType="String">
+        select  dname  from  dbarea  where area>0 and province=#{area} order by area ;
+    </select>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.QstationMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.influ.Qstation" >
+    <id column="STCD" property="stcd" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="WEATHER_CODE" property="weatherCode" jdbcType="VARCHAR" />
+    <result column="STNM" property="stnm" jdbcType="VARCHAR" />
+    <result column="NUMLONG" property="numlong" jdbcType="DECIMAL" />
+    <result column="NUMLATI" property="numlati" jdbcType="DECIMAL" />
+    <result column="LONG" property="longData" jdbcType="DECIMAL" />
+    <result column="LATI" property="lati" jdbcType="DECIMAL" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="AREA" property="area" jdbcType="VARCHAR" />
+    <result column="EPRO" property="epro" jdbcType="VARCHAR" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="PRONM" property="pronm" jdbcType="VARCHAR" />
+    <result column="DISNM" property="disnm" jdbcType="VARCHAR" />
+    <result column="COUNNM" property="counnm" jdbcType="VARCHAR" />
+    <result column="EN_NAME" property="enName" jdbcType="VARCHAR" />
+    <result column="BASINNM" property="basinnm" jdbcType="VARCHAR" />
+    <result column="SUBNM" property="subnm" jdbcType="VARCHAR" />
+    <result column="IS_DISCAPITAL" property="isDiscapital" jdbcType="VARCHAR" />
+    <result column="SUBTYPE_CIT" property="subtypeCit" jdbcType="VARCHAR" />
+    <result column="SUBTYPE_DIS" property="subtypeDis" jdbcType="VARCHAR" />
+    <result column="SUBTYPE_PRO" property="subtypePro" jdbcType="VARCHAR" />
+    <result column="SUBTYPE_AREA" property="subtypeArea" jdbcType="VARCHAR" />
+    <result column="IS_PROCAPITAL" property="isProcapital" jdbcType="VARCHAR" />
+    <result column="SORTID" property="sortid" jdbcType="VARCHAR" />
+    <result column="X" property="x" jdbcType="DECIMAL" />
+    <result column="Y" property="y" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    STCD, CODE, WEATHER_CODE, STNM, NUMLONG, NUMLATI, LONG, LATI, STATE, AREA, EPRO, 
+    PROVINCE, PRONM, DISNM, COUNNM, EN_NAME, BASINNM, SUBNM, IS_DISCAPITAL, SUBTYPE_CIT, 
+    SUBTYPE_DIS, SUBTYPE_PRO, SUBTYPE_AREA, IS_PROCAPITAL, SORTID, X, Y
+  </sql>
+  <select id="findStcdByAreaname" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT STCD FROM qstation WHERE STNM = #{stnm,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="com.dky.entity.influ.Qstation">
+    insert into qstation ( STCD, CODE, WEATHER_CODE, STNM, NUMLONG, NUMLATI, LONG, LATI, STATE, AREA, EPRO,
+    PROVINCE, PRONM, DISNM, COUNNM, EN_NAME, BASINNM, SUBNM, IS_DISCAPITAL, SUBTYPE_CIT,
+    SUBTYPE_DIS, SUBTYPE_PRO, SUBTYPE_AREA, IS_PROCAPITAL, SORTID, X, Y)
+    VALUES (
+    #{stcd,jdbcType=VARCHAR},
+    #{code,jdbcType=VARCHAR},
+    #{weatherCode,jdbcType=VARCHAR},
+    #{stnm,jdbcType=VARCHAR},
+    #{numlong,jdbcType=DECIMAL},
+    #{numlati,jdbcType=DECIMAL},
+    #{longData,jdbcType=DECIMAL},
+    #{lati,jdbcType=DECIMAL},
+    #{state,jdbcType=VARCHAR},
+    #{area,jdbcType=VARCHAR},
+    #{epro,jdbcType=VARCHAR},
+    #{province,jdbcType=VARCHAR},
+    #{pronm,jdbcType=VARCHAR},
+    #{disnm,jdbcType=VARCHAR},
+    #{counnm,jdbcType=VARCHAR},
+    #{enName,jdbcType=VARCHAR},
+    #{basinnm,jdbcType=VARCHAR},
+    #{subnm,jdbcType=VARCHAR},
+    #{isDiscapital,jdbcType=VARCHAR},
+    #{subtypeCit,jdbcType=VARCHAR},
+    #{subtypeDis,jdbcType=VARCHAR},
+    #{subtypePro,jdbcType=VARCHAR},
+    #{subtypeArea,jdbcType=VARCHAR},
+    #{isProcapital,jdbcType=VARCHAR},
+    #{sortid,jdbcType=VARCHAR},
+    #{x,jdbcType=DECIMAL},
+    #{y,jdbcType=DECIMAL}
+    )
+  </insert>
+
+
+
+</mapper>

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadDaytraitMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.LoadDaytrait">
+        <id column="area" property="area" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="DECIMAL"/>
+        <!--<id column="min" property="min" jdbcType="INTEGER" />-->
+        <id column="mdate" property="mdate" jdbcType="VARCHAR"/>
+        <result column="maxload" property="maxload" jdbcType="DECIMAL"/>
+        <result column="maxtime" property="maxtime" jdbcType="VARCHAR"/>
+        <result column="minload" property="minload" jdbcType="DECIMAL"/>
+        <result column="mintime" property="mintime" jdbcType="VARCHAR"/>
+        <result column="fmmaxload" property="fmmaxload" jdbcType="DECIMAL"/>
+        <result column="fmmaxtime" property="fmmaxtime" jdbcType="VARCHAR"/>
+        <result column="pmmaxload" property="pmmaxload" jdbcType="DECIMAL"/>
+        <result column="pmmaxtime" property="pmmaxtime" jdbcType="VARCHAR"/>
+        <result column="aveload" property="aveload" jdbcType="DECIMAL"/>
+        <result column="loadrate" property="loadrate" jdbcType="DECIMAL"/>
+        <result column="minloadrate" property="minloadrate" jdbcType="DECIMAL"/>
+        <result column="differ" property="differ" jdbcType="DECIMAL"/>
+        <result column="differrate" property="differrate" jdbcType="DECIMAL"/>
+        <!--<result column="ref_day" property="refDay" jdbcType="VARCHAR" />
+        <result column="ver_time" property="verTime" jdbcType="DATE" />-->
+    </resultMap>
+
+    <resultMap id="WeekBaseResultMap" type="com.dky.entity.LoadWeektrait">
+        <id column="area" property="area" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="DECIMAL"/>
+        <id column="min" property="min" jdbcType="INTEGER"/>
+        <id column="start_day" property="startDay" jdbcType="VARCHAR"/>
+        <id column="end_day" property="endDay" jdbcType="VARCHAR"/>
+        <result column="maxload" property="maxload" jdbcType="DECIMAL"/>
+        <result column="maxdate" property="maxdate" jdbcType="VARCHAR"/>
+        <result column="minload" property="minload" jdbcType="DECIMAL"/>
+        <result column="mindate" property="mindate" jdbcType="VARCHAR"/>
+        <result column="aveload" property="aveload" jdbcType="DECIMAL"/>
+        <result column="loadrate" property="loadrate" jdbcType="DECIMAL"/>
+        <result column="minloadrate" property="minloadrate" jdbcType="DECIMAL"/>
+        <result column="maxdiffer" property="maxdiffer" jdbcType="DECIMAL"/>
+        <result column="maxddate" property="maxddate" jdbcType="VARCHAR"/>
+        <result column="maxdifferrate" property="maxdifferrate" jdbcType="DECIMAL"/>
+        <result column="maxdrdate" property="maxdrdate" jdbcType="VARCHAR"/>
+        <result column="mindiffer" property="mindiffer" jdbcType="DECIMAL"/>
+        <result column="minddate" property="minddate" jdbcType="VARCHAR"/>
+        <result column="mindifferrate" property="mindifferrate" jdbcType="DECIMAL"/>
+        <result column="mindrdate" property="mindrdate" jdbcType="VARCHAR"/>
+        <result column="avediffer" property="avediffer" jdbcType="DECIMAL"/>
+        <result column="avedifferrate" property="avedifferrate" jdbcType="DECIMAL"/>
+        <result column="ref_day" property="refDay" jdbcType="VARCHAR"/>
+        <result column="ver_time" property="verTime" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        area, id, mdate, maxload, maxtime, minload, mintime, fmmaxload, fmmaxtime, pmmaxload,
+              pmmaxtime, aveload, loadrate, minloadrate, differ, differrate
+    </sql>
+    <sql id="Base_Column_ListQue">
+        area, id, mdate, maxload, maxtime, minload, mintime, fmmaxload, fmmaxtime, pmmaxload,
+              pmmaxtime, aveload, loadrate, minloadrate, differ, differrate, ver_time
+    </sql>
+    <sql id="Yeartrait_Column_List">
+        AVG (aveload) as aveload, MIN (minload) as minload, MAX (maxload) as maxload, AVG (differ) as avediffer,
+        AVG (loadrate) as loadrate, MIN (loadrate) as minloadrate, AVG (differrate) as avedifferrate,
+        MAX (differrate) as maxdifferrate
+    </sql>
+    <select id="selectOne" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from load_daytrait
+        where area = ${area}
+        and mdate = ${mdate}
+    </select>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from load_daytrait
+        where area = #{area,jdbcType=INTEGER}
+        and mdate = #{mdate,jdbcType=VARCHAR}
+    </select>
+    <select id="findLastDayByArea" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM load_daytrait WHERE area = #{area,jdbcType=INTEGER} ORDER BY mdate DESC LIMIT 1 offset 0
+    </select>
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadDaytraitKey">
+        select
+        <include refid="Base_Column_ListQue"/>
+        from load_daytrait where 1=1
+        <if test="area!=null">
+            and area = #{area,jdbcType=VARCHAR}
+        </if>
+        <if test="madeOme!=null">
+            and mdate <![CDATA[ >= ]]> #{madeOme,jdbcType=VARCHAR}
+        </if>
+        <if test="madeTwo!=null">
+            and mdate <![CDATA[ <= ]]> #{madeTwo,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectQuery2" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadDaytraitKey">
+        select
+        <include refid="Base_Column_ListQue"/>
+        from load_daytrait where 1=1
+        <if test="area!=null">
+            and area = #{area,jdbcType=VARCHAR}
+        </if>
+        and mdate in ${legend}
+
+    </select>
+    <select id="selectMaxMinAvgSum" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadDaytraitKey">
+        select
+        max(maxload) maxload,min(minload) minload,avg(aveload) aveload,AVG (loadrate) loadrate,min(minloadrate)
+        minloadrate,max(differrate) differrate,
+        avg(differ) differ ,avg(differrate) fmmaxload
+        from load_daytrait where 1=1
+        <if test="area!=null">
+            and area = #{area,jdbcType=VARCHAR}
+        </if>
+        <if test="madeOme!=null">
+            and mdate <![CDATA[ >= ]]> #{madeOme,jdbcType=VARCHAR}
+        </if>
+        <if test="madeTwo!=null">
+            and mdate <![CDATA[ <= ]]> #{madeTwo,jdbcType=VARCHAR}
+        </if>
+        <if test="legend!=null">
+            and mdate in ${legend}
+        </if>
+    </select>
+    <select id="selectJinDuTiao" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadDaytraitKey">
+        SELECT
+            max(maxload)     maxload,
+            min(minload)     minload,
+            avg(aveload)     aveload,
+            avg(loadrate)    loadrate,
+            min(minloadrate) minloadrate,
+            max(differrate)  differrate,
+            avg(differ)      differ,
+            avg(differrate)  differrate
+        FROM load_daytrait
+        WHERE area = #{area,jdbcType=INTEGER}
+              AND mdate <![CDATA[ >= ]]> #{madeOme,jdbcType=VARCHAR} AND mdate <![CDATA[ <= ]]> #{madeTwo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectForWeekByKey" resultMap="WeekBaseResultMap" parameterType="com.dky.entity.LoadDaytraitKey">
+        SELECT
+            max(maxload)     maxload,
+            min(minload)     minload,
+            avg(aveload)     aveload,
+            min(minloadrate) minloadrate,
+            max(differrate)  maxdifferrate,
+            max(differ)      maxdiffer,
+            avg(differ)      avediffer,
+            avg(differrate)  avedifferrate
+        FROM load_daytrait
+        WHERE area = #{area,jdbcType=INTEGER}
+              AND mdate <![CDATA[ >= ]]> #{madeOme,jdbcType=VARCHAR} AND mdate <![CDATA[ <= ]]> #{madeTwo,jdbcType=VARCHAR}
+    </select>
+    <!--从日表中查询最大日期-->
+    <select id="dayMaxDate" resultType="String" parameterType="com.dky.entity.LoadDaytraitKey">
+        SELECT MAX(mdate)
+        FROM load_daytrait
+        WHERE
+            area = #{area,jdbcType=INTEGER}
+    </select>
+    <select id="findExtremaMdateByKey" resultType="com.dky.entity.vo.DaytraitResult"
+            parameterType="com.dky.entity.LoadDaytraitKey">
+        SELECT
+            MAX(mdate) AS maxMdate,
+            MIN(mdate) AS minMdate
+        FROM load_daytrait
+        WHERE
+            area = #{area,jdbcType=INTEGER}
+    </select>
+    <select id="findExtremaYearByArea" resultType="com.dky.entity.vo.YearTraitResult"
+            parameterType="com.dky.entity.LoadDaytraitKey">
+        SELECT
+            MAX(mdate) AS maxYear,
+            MIN(mdate) AS minYear
+        FROM load_daytrait
+        WHERE
+            area = #{area,jdbcType=INTEGER}
+    </select>
+    <select id="findYeartraitByKey" resultType="com.dky.entity.LoadYeartrait"
+            parameterType="com.dky.entity.LoadYeartraitKey">
+        SELECT
+        <include refid="Yeartrait_Column_List"/>
+        FROM load_daytrait
+        where area = #{area,jdbcType=INTEGER}
+        AND mdate BETWEEN #{minDate,jdbcType=VARCHAR} AND #{maxDate,jdbcType=VARCHAR}
+    </select>
+    <select id="findChartsDataByKey" resultType="com.dky.entity.LoadDaytrait"
+            parameterType="com.dky.entity.LoadYeartraitKey">
+        SELECT
+            aveload,
+            mdate
+        FROM load_daytrait
+        WHERE area = #{area,jdbcType=INTEGER}
+              AND mdate BETWEEN #{minDate,jdbcType=VARCHAR} AND #{maxDate,jdbcType=VARCHAR} order by mdate
+    </select>
+    <insert id="insert" parameterType="com.dky.entity.LoadDaytrait">
+        INSERT INTO load_daytrait (area, id, min,
+                                   mdate, maxload, maxtime,
+                                   minload, mintime, fmmaxload,
+                                   fmmaxtime, pmmaxload, pmmaxtime,
+                                   aveload, loadrate, minloadrate,
+                                   differ, differrate, ref_day,
+                                   ver_time)
+        VALUES (#{area,jdbcType=INTEGER}, #{id,jdbcType=DECIMAL}, #{min,jdbcType=INTEGER},
+                                          #{mdate,jdbcType=VARCHAR}, #{maxload,jdbcType=DECIMAL},
+                                          #{maxtime,jdbcType=VARCHAR},
+                                          #{minload,jdbcType=DECIMAL}, #{mintime,jdbcType=VARCHAR},
+                                          #{fmmaxload,jdbcType=DECIMAL},
+                                          #{fmmaxtime,jdbcType=VARCHAR}, #{pmmaxload,jdbcType=DECIMAL},
+                #{pmmaxtime,jdbcType=VARCHAR},
+                #{aveload,jdbcType=DECIMAL}, #{loadrate,jdbcType=DECIMAL}, #{minloadrate,jdbcType=DECIMAL},
+                #{differ,jdbcType=DECIMAL}, #{differrate,jdbcType=DECIMAL}, #{refDay,jdbcType=VARCHAR},
+                #{verTime,jdbcType=DATE})
+    </insert>
+    <select id="findResentListByParams" parameterType="Map"
+            resultMap="BaseResultMap">
+        SELECT AREA , MDATE ,MAXLOAD,MINLOAD,AVELOAD FROM load_daytrait
+        WHERE AREA = #{area,jdbcType=INTEGER}
+        <if test="mdate !=null ">
+            AND mdate BETWEEN #{minMdate,jdbcType=VARCHAR} AND #{mdate,jdbcType=VARCHAR}
+        </if>
+        ORDER BY MDATE DESC LIMIT 30 offset 0;
+    </select>
+    <select id="findClusterDatasByParams" resultType="com.dky.entity.influ.vo.ClusterData" parameterType="Map" >
+        SELECT
+            type,
+            days,
+            maxTemperature,
+            minTemperature,
+            maxload,
+            minload,
+            avgload
+        FROM (
+                 SELECT
+                     cluster_type AS type,
+                     count(*)     AS days
+                 FROM load_weather_cluster
+                 WHERE AREA = #{area} AND MDATE BETWEEN #{mindate} AND #{maxdate}
+                                                                       AND cluster_flag = #{clusterFlag}
+                 GROUP BY cluster_type) a,
+            (SELECT
+                 cluster_type   AS type1,
+                 max(DATA_VLUE) AS maxTemperature,
+                 min(DATA_VLUE) AS minTemperature
+             FROM load_weather_cluster
+             WHERE data_type = 'temperature' AND AREA = #{area} AND MDATE BETWEEN #{mindate} AND #{maxdate}
+                                                                                                 AND cluster_flag = #{clusterFlag}
+
+             GROUP BY cluster_type) b,
+            (SELECT
+                 cluster_type   AS type2,
+                 max(DATA_VLUE) AS maxload,
+                 min(DATA_VLUE) AS minload
+             FROM load_weather_cluster
+             WHERE data_type = 'maxload' AND AREA = #{area} AND MDATE BETWEEN #{mindate} AND #{maxdate}
+                                                                                             AND cluster_flag = #{clusterFlag}
+             GROUP BY cluster_type) c,
+            (SELECT
+                 cluster_type   AS type3,
+                 avg(DATA_VLUE) AS avgload
+             FROM load_weather_cluster
+             WHERE data_type = 'aveload' AND AREA = #{area} AND MDATE BETWEEN #{mindate} AND #{maxdate}
+                                                                                             AND cluster_flag = #{clusterFlag}
+             GROUP BY cluster_type) d
+        WHERE type = type1 AND type = type2 AND type = type3
+        ORDER BY minTemperature, maxTemperature
+    </select>
+    <select id="findClustersByParams" parameterType="Map" resultType="com.dky.entity.influ.LoadWeatherCluster">
+        SELECT
+            a.area1  AS area,
+            a.mdate1 AS mdate,
+            a.value1,
+            b.value2,
+            c.value3,
+            type     AS type
+        FROM
+            (
+                SELECT
+                    area         AS area1,
+                    mdate        AS mdate1,
+                    data_vlue    AS value1,
+                    cluster_type AS type,
+                    cluster_flag AS flag1
+                FROM load_weather_cluster
+                WHERE DATA_TYPE = #{type1}
+            ) a,
+            (
+                SELECT
+                    area         AS area2,
+                    mdate        AS mdate2,
+                    data_vlue    AS value2,
+                    cluster_flag AS flag2
+                FROM load_weather_cluster
+                WHERE DATA_TYPE = #{type2}
+            ) b,
+            (
+                SELECT
+                    area         AS area3,
+                    mdate        AS mdate3,
+                    data_vlue    AS value3,
+                    cluster_flag AS flag3
+                FROM load_weather_cluster
+                WHERE DATA_TYPE = #{type3}
+            ) c
+        WHERE area1 = area2
+              AND area1 = area3
+              AND mdate1 = mdate2
+              AND mdate1 = mdate3
+              AND flag1 = flag2
+              AND flag1 = flag3
+              AND flag1 = #{clusterFlag}
+              AND AREA1 = #{area} AND MDATE1 BETWEEN #{mindate} AND #{maxdate}
+        ORDER BY mdate
+    </select>
+    <select id="findClusterTableDatasByParams" parameterType="Map"
+            resultType="com.dky.entity.influ.vo.ClusterTableData">
+        SELECT
+        a.mdate1 AS mdateN,
+        a.tempB,
+        b.maxloadB,
+        c.avgloadB
+        FROM
+        (
+        SELECT
+        area AS area1,
+        mdate AS mdate1,
+        data_vlue AS tempB,
+        cluster_type AS type1,
+        cluster_flag AS flag1
+        FROM load_weather_cluster
+        WHERE DATA_TYPE = #{type1}
+        ) a,
+        (
+        SELECT
+        area AS area2,
+        mdate AS mdate2,
+        data_vlue AS maxloadB,
+        cluster_type AS type2,
+        cluster_flag AS flag2
+        FROM load_weather_cluster
+        WHERE DATA_TYPE = #{type2}
+        ) b,
+        (
+        SELECT
+        area AS area3,
+        mdate AS mdate3,
+        data_vlue AS avgloadB,
+        cluster_type AS type3,
+        cluster_flag AS flag3
+        FROM load_weather_cluster
+        WHERE DATA_TYPE = #{type3}
+        ) c
+        WHERE area1 = area2
+        AND area1 = area3
+        AND mdate1 = mdate2
+        AND mdate1 = mdate3
+        AND flag1 = flag2
+        AND flag1 = flag3
+        AND flag1 = #{clusterFlag}
+        AND AREA1 = #{area}
+        AND type1 = type2
+        AND type1 = type3
+        <if test="type!=null">
+            AND type1 = #{type}
+        </if>
+        <if test="lowDate == null">
+        AND MDATE1 BETWEEN #{mindate} AND #{maxdate}
+        </if>
+        <if test="lowDate != null">
+            AND  to_char(to_date(MDATE1,'yyyymmdd'),'yyyymm') in
+            <foreach collection="lowDate" index="index" item="lowDate" open="(" separator="," close=")">
+                #{lowDate}
+            </foreach>
+        </if>
+        ORDER BY mdate1 LIMIT #{limit} offset #{page}
+    </select>
+    <select id="findClusterCountByParams" parameterType="Map" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM load_weather_cluster
+        WHERE
+        cluster_flag = #{clusterFlag}
+        AND AREA = #{area}
+        <if test="type!=null">
+            AND cluster_type = #{type}
+        </if>
+        <if test="lowDate == null">
+            AND MDATE BETWEEN #{mindate} AND #{maxdate}
+        </if>
+        <if test="lowDate != null">
+            AND  to_char(to_date(MDATE,'yyyymmdd'),'yyyymm') in
+            <foreach collection="lowDate" index="index" item="lowDate" open="(" separator="," close=")">
+                #{lowDate}
+            </foreach>
+        </if>
+    </select>
+    <select id="findValuesByParams" resultType="java.math.BigDecimal" parameterType="Map">
+        SELECT ${load} FROM load_daytrait WHERE AREA = #{area} AND MDATE BETWEEN #{startday} AND #{endday} ORDER BY MDATE
+    </select>
+     <!-- 这个方法是在点击周期性分析日符合分析按钮，来这查询这个表是否有这一年的数据  -->
+    <select id="selectLoadDaytraitTF"  resultType="java.lang.Integer">
+        select count(*) from load_daytrait where area=${area} AND SUBSTRING(mdate,0,5)='${mdate}'
+    </select>
+
+    <!-- 这个方法是在点击全年气象分析柱状图的时候触发 -->
+    <select id="selectMaxDateString"  resultType="java.lang.String">
+        select  max(mdate) mdate   from load_daytrait where area=${area} AND SUBSTRING(mdate,0,7)='${mdate}'
+    </select>
+
+
+    <!-- 这个方法是在点击全年气象分析柱状图跳转到气象分析  -->
+    <select id="selectMaxDate"  resultType="java.lang.String">
+        select max(mdate) mdate  from load_daytrait where area=${area}
+    </select>
+
+</mapper>

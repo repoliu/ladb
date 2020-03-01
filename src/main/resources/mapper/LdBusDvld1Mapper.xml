@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LdBusDvld1Mapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.LdBusDvld1" >
+    <result column="ld_id" property="ldId" jdbcType="BIGINT" />
+    <result column="ld_descr" property="ldDescr" jdbcType="DECIMAL" />
+    <result column="st_id" property="stId" jdbcType="BIGINT" />
+    <result column="st_descr" property="stDescr" jdbcType="VARCHAR" />
+    <result column="dcc1_id" property="dcc1Id" jdbcType="BIGINT" />
+    <result column="dcc1_descr" property="dcc1Descr" jdbcType="VARCHAR" />
+    <result column="dcc2_id" property="dcc2Id" jdbcType="BIGINT" />
+    <result column="dcc2_descr" property="dcc2Descr" jdbcType="VARCHAR" />
+    <result column="dcc3_id" property="dcc3Id" jdbcType="BIGINT" />
+    <result column="dcc3_descr" property="dcc3Descr" jdbcType="VARCHAR" />
+    <result column="dcc4_id" property="dcc4Id" jdbcType="BIGINT" />
+    <result column="dcc4_descr" property="dcc4Descr" jdbcType="VARCHAR" />
+    <result column="dcc5_id" property="dcc5Id" jdbcType="BIGINT" />
+    <result column="dcc5_descr" property="dcc5Descr" jdbcType="VARCHAR" />
+
+    <result column="day_flag" property="dayFlag" jdbcType="INTEGER" />
+    <result column="ultraday_flag" property="ultradayFlag" jdbcType="INTEGER" />
+    <result column="ld_vl" property="ldVl" jdbcType="INTEGER" />
+    <result column="ver_time" property="verTime" jdbcType="DATE" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+   ld_id,ld_descr,st_id,st_descr,dcc1_id,dcc1_descr,dcc2_id,dcc2_descr,dcc3_id,dcc3_descr,dcc4_id,dcc4_descr,dcc5_id,dcc5_descr,day_flag,ultraday_flag,ld_vl,ver_time
+  </sql>
+
+
+  <sql id="Base_Column" >
+ dcc1_descr,dcc2_descr,dcc3_descr,dcc4_descr,dcc5_descr
+  </sql>
+
+
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld  ORDER BY dcc1_descr desc
+    </select>
+
+    <select id="selectValue" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld     where    dcc1_descr= #{dccName,jdbcType=VARCHAR}            ORDER BY dcc1_descr desc
+    </select>
+
+    <select id="selectValue2" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld    where     dcc2_descr = #{dccName,jdbcType=VARCHAR}            ORDER BY dcc1_descr desc
+    </select>
+
+    <select id="selectValue3" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld     where    dcc3_descr = #{dccName,jdbcType=VARCHAR}            ORDER BY dcc1_descr desc
+    </select>
+
+    <select id="selectValue4" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld    where     dcc4_descr = #{dccName,jdbcType=VARCHAR}            ORDER BY dcc1_descr desc
+    </select>
+
+    <select id="selectValue5" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select distinct   <include refid="Base_Column"/>  from ldbusdvld     where    dcc5_descr = #{dccName,jdbcType=VARCHAR}            ORDER BY dcc1_descr desc
+    </select>
+
+
+
+
+
+
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc1_descr=#{dcc1Descr,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCountAreaAll" resultType="java.lang.Integer" >
+        select  count(dcc1_descr) from ldbusdvld  where dcc1_descr in
+        <foreach collection="listArea" item="dccDwscr" open="(" close=")" separator=",">
+            #{dccDwscr}
+        </foreach>
+    </select>
+
+
+    <select id="selectCountDcc" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc2_descr= #{dccNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCountDcc1" resultType="java.lang.Integer" >
+        select  count(dcc1_descr) from ldbusdvld  where dcc1_descr= '${dcc1Descr}'
+    </select>
+
+    <select id="selectCountDcc2" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc2_descr= #{dccNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCountDcc3" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc3_descr= #{dccNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCountDcc4" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc4_descr= #{dccNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCountDcc5" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select  count(dcc1_descr) from ldbusdvld  where dcc5_descr= #{dccNumber,jdbcType=VARCHAR}
+    </select>
+
+
+
+  <resultMap id="Base" type="java.util.Arrays" >
+    <result column="dcc1_id" property="dcc1Id" jdbcType="BIGINT" />
+    <result column="dcc2_id" property="dcc2Id" jdbcType="BIGINT" />
+    <result column="dcc3_id" property="dcc3Id" jdbcType="BIGINT" />
+    <result column="dcc4_id" property="dcc4Id" jdbcType="BIGINT" />
+    <result column="dcc5_id" property="dcc5Id" jdbcType="BIGINT" />
+
+  </resultMap>
+
+
+  <select id="select" resultMap="Base" >
+    select distinct   dcc5_descr,dcc4_descr,dcc3_descr,dcc2_descr,dcc1_descr  from ldbusdvld
+  </select>
+</mapper>

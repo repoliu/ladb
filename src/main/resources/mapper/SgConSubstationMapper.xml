@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.SgConSubstationMapper">
+    <resultMap id="BaseResultMap" type="java.util.HashMap">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pg_id" jdbcType="VARCHAR" property="pgId"/>
+        <result column="type_name" jdbcType="VARCHAR" property="typeName"/>
+        <result column="top_ac_voltage_type_name" jdbcType="VARCHAR" property="topAcVoltageTypName"/>
+    </resultMap>
+
+    <select id="selectSubstationByName" resultMap="BaseResultMap">
+         SELECT q.aId aId,q.aName aName,q.bId bId,q.bName bName,q.a1 a1,q.b1 b1,q.a2 a2,q.b2 b2,q.a3 a3,q.b3 b3,q.a4 a4,q.b4 b4,f.id a5,f.name_abbreviation b5,f.parent_id,q.level_name FROM
+		   (SELECT j.aId aId,j.aName aName,j.bId bId,j.bName bName,j.a1 a1,j.b1 b1,j.a2 a2,j.b2 b2,j.a3 a3,j.b3 b3,e.id a4,e.name_abbreviation b4,e.parent_id,j.level_name FROM
+		   	  (SELECT h.aId aId,h.aName aName,h.bId bId,h.bName bName,h.a1 a1,h.b1 b1,h.a2 a2,h.b2 b2,d.id a3,d.name_abbreviation b3,d.parent_id,h.level_name FROM
+				  (SELECT g.aId aId,g.aName aName,g.bId bId,g.bName bName,g.a1 a1,g.b1 b1,c.id a2,c.name_abbreviation b2,c.parent_id,g.level_name FROM
+					  (SELECT a.id aId,a.name aName,dev.id bId,dev.name bName,a.pg_id,b.id a1,b.parent_id,b.name_abbreviation b1,b.level_name
+							FROM mm_sg_con_substation_b a
+							LEFT JOIN mm_sg_con_pwrgrid_b b ON a.pg_id = b.id
+							LEFT JOIN mm_sg_dev_pwrtransfm_b dev ON a.id = dev.st_id
+							where a.type_name = '变电站' and a.top_ac_voltage_type_name = '220kV') g
+				  LEFT JOIN mm_sg_con_pwrgrid_b c ON g.parent_id = c.id ) h
+			  LEFT JOIN mm_sg_con_pwrgrid_b d ON h.parent_id = d.id) j
+			LEFT JOIN mm_sg_con_pwrgrid_b e ON j.parent_id = e.id) q
+		  LEFT JOIN mm_sg_con_pwrgrid_b f ON q.parent_id = f.id
+    </select>
+
+</mapper>

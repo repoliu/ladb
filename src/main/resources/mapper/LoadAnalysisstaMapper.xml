@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadAnalysisstaMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.LoadAnalysissta" >
+    <id column="area" property="area" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <id column="nweek" property="nweek" jdbcType="INTEGER" />
+    <id column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <id column="daynum" property="daynum" jdbcType="INTEGER" />
+    <result column="stahigh" property="stahigh" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area, id, nweek, enddate, daynum, stahigh
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadAnalysisstaKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from load_analysissta
+    where area = #{area,jdbcType=INTEGER}
+      and id = #{id,jdbcType=DECIMAL}
+      and nweek = #{nweek,jdbcType=INTEGER}
+      and enddate = #{enddate,jdbcType=VARCHAR}
+      and daynum = #{daynum,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.dky.entity.LoadAnalysissta" >
+    insert into load_analysissta (area, id, nweek, 
+      enddate, daynum, stahigh
+      )
+    values (#{area,jdbcType=INTEGER}, #{id,jdbcType=DECIMAL}, #{nweek,jdbcType=INTEGER}, 
+      #{enddate,jdbcType=VARCHAR}, #{daynum,jdbcType=INTEGER}, #{stahigh,jdbcType=DECIMAL}
+      )
+  </insert>
+</mapper>

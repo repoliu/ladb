@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.LdBusDvldDataMapper">
+    <resultMap type="java.util.HashMap" id="BaseResultMap">
+        <result column="LD_ID" jdbcType="BIGINT" property="ld_id" />
+        <result column="LD_DESCR" jdbcType="VARCHAR" property="ld_descr" />
+        <result column="ST_ID" jdbcType="BIGINT" property="st_id" />
+        <result column="ST_DESCR" jdbcType="VARCHAR" property="st_descr" />
+        <result column="DV_ID" jdbcType="BIGINT" property="dv_id" />
+        <result column="DV_DESCR" jdbcType="VARCHAR" property="dv_descr" />
+        <result column="CO_ID" jdbcType="BIGINT" property="co_id" />
+        <result column="CO_DESCR" jdbcType="VARCHAR" property="co_descr" />
+        <result column="FLAG" jdbcType="INTEGER" property="flag" />
+        <result column="LD_VL" jdbcType="INTEGER" property="ld_vl" />
+        <result column="VER_TIME" jdbcType="DATE" property="ver_time" />
+        <result column="NEWREAD" jdbcType="INTEGER" property="newread" />
+    </resultMap>
+
+    <select id="insertIntoFile" resultMap="BaseResultMap">
+        select * from "EMSHIS"."BUSLOAD"."LDBUSDVLD" order by ver_time
+    </select>
+
+</mapper>

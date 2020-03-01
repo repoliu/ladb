@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.ForHourWeatherMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.influ.ForHourWeather">
+        <id column="AREA" property="area" jdbcType="INTEGER"/>
+        <id column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="AREANAME" property="areaname" jdbcType="VARCHAR"/>
+        <result column="MDATE" property="mdate" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TYPE" property="weatherType" jdbcType="VARCHAR"/>
+        <result column="F00" property="f00" jdbcType="DECIMAL"/>
+        <result column="F01" property="f01" jdbcType="DECIMAL"/>
+        <result column="F02" property="f02" jdbcType="DECIMAL"/>
+        <result column="F03" property="f03" jdbcType="DECIMAL"/>
+        <result column="F04" property="f04" jdbcType="DECIMAL"/>
+        <result column="F05" property="f05" jdbcType="DECIMAL"/>
+        <result column="F06" property="f06" jdbcType="DECIMAL"/>
+        <result column="F07" property="f07" jdbcType="DECIMAL"/>
+        <result column="F08" property="f08" jdbcType="DECIMAL"/>
+        <result column="F09" property="f09" jdbcType="DECIMAL"/>
+        <result column="F10" property="f10" jdbcType="DECIMAL"/>
+        <result column="F11" property="f11" jdbcType="DECIMAL"/>
+        <result column="F12" property="f12" jdbcType="DECIMAL"/>
+        <result column="F13" property="f13" jdbcType="DECIMAL"/>
+        <result column="F14" property="f14" jdbcType="DECIMAL"/>
+        <result column="F15" property="f15" jdbcType="DECIMAL"/>
+        <result column="F16" property="f16" jdbcType="DECIMAL"/>
+        <result column="F17" property="f17" jdbcType="DECIMAL"/>
+        <result column="F18" property="f18" jdbcType="DECIMAL"/>
+        <result column="F19" property="f19" jdbcType="DECIMAL"/>
+        <result column="F20" property="f20" jdbcType="DECIMAL"/>
+        <result column="F21" property="f21" jdbcType="DECIMAL"/>
+        <result column="F22" property="f22" jdbcType="DECIMAL"/>
+        <result column="F23" property="f23" jdbcType="DECIMAL"/>
+        <result column="F24" property="f24" jdbcType="DECIMAL"/>
+        <result column="VER_TIME" property="verTime" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    AREA, ID, AREANAME, MDATE, WEATHER_TYPE, F00, F01, F02, F03, F04, F05, F06, F07, 
+    F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, 
+    VER_TIME
+    </sql>
+    <sql id="Chart_Column_List">
+    F00, F01, F02, F03, F04, F05, F06, F07,
+    F08, F09, F10, F11, F12, F13, F14, F15,
+    F16, F17, F18, F19, F20, F21, F22, F23, F24
+    </sql>
+    <select id="findAreaAndMdate" resultType="com.dky.entity.influ.vo.WeatherResult">
+    SELECT /*FIRST 1*/ area , mdate FROM for_hour_weather order by mdate desc LIMIT 1 offset 0
+</select>
+    <select id="findExtremeMdateByArea" resultType="com.dky.entity.influ.vo.WeatherResult"
+            parameterType="java.lang.Integer">
+      select max(mdate) as maxdate,min(mdate) as mindate
+      from
+      (select mdate,area from for_hour_weather
+      union select mdate,area from his_hour_weather ) as a  where area = #{area,jdbcType=INTEGER}
+    </select>
+    <select id="isExist" resultType="java.lang.Integer" parameterType="Map">
+        select count(*) from for_hour_weather
+        WHERE areaname = #{areaname}
+        AND mdate = #{mdate}
+        AND weather_type = #{weatherType}
+    </select>
+    <select id="findForHourWeatherByKey" resultMap="BaseResultMap" parameterType="Map">
+        SELECT
+        <include refid="Chart_Column_List"/>
+        FROM for_hour_weather
+        WHERE
+        mdate = #{mdate}
+        AND area = #{area}
+        AND weather_type = #{type} LIMIT 1 offset 0
+    </select>
+
+    <select id="select" resultMap="BaseResultMap"  >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM for_hour_weather
+    </select>
+    <update id="updateByKey" parameterType="com.dky.entity.influ.ForHourWeather" >
+        update for_hour_weather
+        set AREANAME = #{areaname,jdbcType=VARCHAR},
+        ID = #{id,jdbcType=BIGINT},
+        MDATE = #{mdate,jdbcType=VARCHAR},
+        WEATHER_TYPE = #{weatherType,jdbcType=VARCHAR},
+        F00 = #{f00,jdbcType=DECIMAL},
+        F01 = #{f01,jdbcType=DECIMAL},
+        F02 = #{f02,jdbcType=DECIMAL},
+        F03 = #{f03,jdbcType=DECIMAL},
+        F04 = #{f04,jdbcType=DECIMAL},
+        F05 = #{f05,jdbcType=DECIMAL},
+        F06 = #{f06,jdbcType=DECIMAL},
+        F07 = #{f07,jdbcType=DECIMAL},
+        F08 = #{f08,jdbcType=DECIMAL},
+        F09 = #{f09,jdbcType=DECIMAL},
+        F10 = #{f10,jdbcType=DECIMAL},
+        F11 = #{f11,jdbcType=DECIMAL},
+        F12 = #{f12,jdbcType=DECIMAL},
+        F13 = #{f13,jdbcType=DECIMAL},
+        F14 = #{f14,jdbcType=DECIMAL},
+        F15 = #{f15,jdbcType=DECIMAL},
+        F16 = #{f16,jdbcType=DECIMAL},
+        F17 = #{f17,jdbcType=DECIMAL},
+        F18 = #{f18,jdbcType=DECIMAL},
+        F19 = #{f19,jdbcType=DECIMAL},
+        F20 = #{f20,jdbcType=DECIMAL},
+        F21 = #{f21,jdbcType=DECIMAL},
+        F22 = #{f22,jdbcType=DECIMAL},
+        F23 = #{f23,jdbcType=DECIMAL},
+        F24 = #{f24,jdbcType=DECIMAL},
+        VER_TIME = #{verTime,jdbcType=DATE}
+        where areaname = #{areaname}
+              AND mdate = #{mdate}
+              AND weather_type = #{weatherType}
+    </update>
+    <insert id="insert" parameterType="com.dky.entity.influ.ForHourWeather" >
+        insert into for_hour_weather (AREA, ID, AREANAME,
+        MDATE, WEATHER_TYPE, F00,
+        F01, F02, F03, F04,
+        F05, F06, F07, F08,
+        F09, F10, F11, F12,
+        F13, F14, F15, F16,
+        F17, F18, F19, F20,
+        F21, F22, F23, F24,
+        VER_TIME)
+        values (#{area,jdbcType=INTEGER}, #{id,jdbcType=BIGINT}, #{areaname,jdbcType=VARCHAR},
+        #{mdate,jdbcType=VARCHAR}, #{weatherType,jdbcType=VARCHAR}, #{f00,jdbcType=DECIMAL},
+        #{f01,jdbcType=DECIMAL}, #{f02,jdbcType=DECIMAL}, #{f03,jdbcType=DECIMAL}, #{f04,jdbcType=DECIMAL},
+        #{f05,jdbcType=DECIMAL}, #{f06,jdbcType=DECIMAL}, #{f07,jdbcType=DECIMAL}, #{f08,jdbcType=DECIMAL},
+        #{f09,jdbcType=DECIMAL}, #{f10,jdbcType=DECIMAL}, #{f11,jdbcType=DECIMAL}, #{f12,jdbcType=DECIMAL},
+        #{f13,jdbcType=DECIMAL}, #{f14,jdbcType=DECIMAL}, #{f15,jdbcType=DECIMAL}, #{f16,jdbcType=DECIMAL},
+        #{f17,jdbcType=DECIMAL}, #{f18,jdbcType=DECIMAL}, #{f19,jdbcType=DECIMAL}, #{f20,jdbcType=DECIMAL},
+        #{f21,jdbcType=DECIMAL}, #{f22,jdbcType=DECIMAL}, #{f23,jdbcType=DECIMAL}, #{f24,jdbcType=DECIMAL},
+        #{verTime,jdbcType=DATE})
+    </insert>
+</mapper>

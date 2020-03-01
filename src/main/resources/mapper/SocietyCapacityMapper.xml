@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.SocietyCapacityMapper" >
+
+    <resultMap id="BaseResultMap" type="com.dky.entity.SocietyCapacity" >
+        <result column="areaname" property="areaName" jdbcType="VARCHAR" />
+        <result column="mdate" property="mdate" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="capacity_mon" property="capacityMon" jdbcType="DECIMAL" />
+    </resultMap>
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.SocietyCapacity">
+        SELECT  areaname,mdate,id,capacity_mon  FROM  society_capacity where 1=1
+        <if test="areaName!=null">
+            and areaname = #{areaName,jdbcType=VARCHAR}
+        </if>
+        <if test="id!=null">
+            and id = #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="minDate!=null">
+            and mdate <![CDATA[ >= ]]> #{minDate,jdbcType=VARCHAR}
+        </if>
+        <if test="mdate!=null">
+            and mdate <![CDATA[ <= ]]> #{mdate,jdbcType=VARCHAR}
+        </if>
+        order  by  mdate  asc
+    </select>
+
+    <select id="selectMaxDate" resultType="java.util.Map" parameterType="com.dky.entity.SocietyCapacity">
+        SELECT  max(mdate) maxdate,min(mdate)mindate FROM  society_capacity where 1=1
+        <if test="areaName!=null">
+          and    areaname =#{areaName,jdbcType=VARCHAR}
+        </if>
+        <if test="id!=null">
+            and id=#{id,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <insert id="insert" parameterType="com.dky.entity.SocietyCapacity">
+        insert into society_capacity (areaname,mdate,id,capacity_mon )
+        VALUES (
+         #{areaName,jdbcType=VARCHAR}
+         , #{mdate,jdbcType=VARCHAR}
+         , #{id,jdbcType=VARCHAR}
+         , #{capacityMon,jdbcType=DECIMAL}
+        )
+
+    </insert>
+
+</mapper>

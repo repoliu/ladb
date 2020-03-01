@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.PerGdpMapper" >
+
+    <resultMap id="BaseResultMap" type="com.dky.entity.PerGdp" >
+        <result column="areaname" property="areaName" jdbcType="VARCHAR" />
+        <result column="mdate" property="mDate" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="per_gdp" property="perGdp" jdbcType="DECIMAL" />
+    </resultMap>
+    <select id="selectQuery" resultMap="BaseResultMap" parameterType="com.dky.entity.PerGdp">
+        SELECT  areaname,mdate,per_gdp    FROM  per_gdp where 1=1
+        <if test="minDate!=null">
+            and mdate <![CDATA[ >= ]]> #{minDate,jdbcType=VARCHAR}
+        </if>
+        <if test="mDate!=null">
+            and mdate <![CDATA[ <= ]]> #{mDate,jdbcType=VARCHAR}
+        </if>
+        <if test="areaName!=null">
+            and areaname = #{areaName,jdbcType=VARCHAR}
+        </if>
+        order  by  mdate  asc
+    </select>
+
+    <insert id="insert" parameterType="com.dky.entity.PerGdp">
+        insert into per_gdp (areaname,mdate,per_gdp,unit )
+        VALUES (
+
+        #{areaName,jdbcType=VARCHAR}
+        ,#{mDate,jdbcType=VARCHAR}
+        ,#{perGdp,jdbcType=VARCHAR}
+        ,#{unit,jdbcType=VARCHAR}
+
+        )
+    </insert>
+
+
+
+
+
+</mapper>

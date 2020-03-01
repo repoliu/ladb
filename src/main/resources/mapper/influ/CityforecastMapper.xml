@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.CityforecastMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.influ.Cityforecast">
+        <id column="TIME" property="time" jdbcType="TIMESTAMP"/>
+        <id column="STCD" property="stcd" jdbcType="VARCHAR"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT24" property="weatherText24" jdbcType="VARCHAR"/>
+        <result column="WEATHER12" property="weather12" jdbcType="VARCHAR"/>
+        <result column="WEATHER12_CODE" property="weather12Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER24" property="weather24" jdbcType="VARCHAR"/>
+        <result column="WEATHER24_CODE" property="weather24Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP24" property="hightemp24" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP24" property="lowtemp24" jdbcType="SMALLINT"/>
+        <result column="WINDD24" property="windd24" jdbcType="VARCHAR"/>
+        <result column="WINDP24" property="windp24" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT48" property="weatherText48" jdbcType="VARCHAR"/>
+        <result column="WEATHER36" property="weather36" jdbcType="VARCHAR"/>
+        <result column="WEATHER36_CODE" property="weather36Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER48" property="weather48" jdbcType="VARCHAR"/>
+        <result column="WEATHER48_CODE" property="weather48Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP48" property="hightemp48" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP48" property="lowtemp48" jdbcType="SMALLINT"/>
+        <result column="WINDD48" property="windd48" jdbcType="VARCHAR"/>
+        <result column="WINDP48" property="windp48" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT72" property="weatherText72" jdbcType="VARCHAR"/>
+        <result column="WEATHER60" property="weather60" jdbcType="VARCHAR"/>
+        <result column="WEATHER60_CODE" property="weather60Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER72" property="weather72" jdbcType="VARCHAR"/>
+        <result column="WEATHER72_CODE" property="weather72Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP72" property="hightemp72" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP72" property="lowtemp72" jdbcType="SMALLINT"/>
+        <result column="WINDD72" property="windd72" jdbcType="VARCHAR"/>
+        <result column="WINDP72" property="windp72" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT96" property="weatherText96" jdbcType="VARCHAR"/>
+        <result column="WEATHER84" property="weather84" jdbcType="VARCHAR"/>
+        <result column="WEATHER84_CODE" property="weather84Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER96" property="weather96" jdbcType="VARCHAR"/>
+        <result column="WEATHER96_CODE" property="weather96Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP96" property="hightemp96" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP96" property="lowtemp96" jdbcType="SMALLINT"/>
+        <result column="WINDD96" property="windd96" jdbcType="VARCHAR"/>
+        <result column="WINDP96" property="windp96" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT120" property="weatherText120" jdbcType="VARCHAR"/>
+        <result column="WEATHER108" property="weather108" jdbcType="VARCHAR"/>
+        <result column="WEATHER108_CODE" property="weather108Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER120" property="weather120" jdbcType="VARCHAR"/>
+        <result column="WEATHER120_CODE" property="weather120Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP120" property="hightemp120" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP120" property="lowtemp120" jdbcType="SMALLINT"/>
+        <result column="WINDD120" property="windd120" jdbcType="VARCHAR"/>
+        <result column="WINDP120" property="windp120" jdbcType="VARCHAR"/>
+        <result column="WEATHER_TEXT144" property="weatherText144" jdbcType="VARCHAR"/>
+        <result column="WEATHER132" property="weather132" jdbcType="VARCHAR"/>
+        <result column="WEATHER132_CODE" property="weather132Code" jdbcType="SMALLINT"/>
+        <result column="WEATHER144" property="weather144" jdbcType="VARCHAR"/>
+        <result column="WEATHER144_CODE" property="weather144Code" jdbcType="SMALLINT"/>
+        <result column="HIGHTEMP144" property="hightemp144" jdbcType="SMALLINT"/>
+        <result column="LOWTEMP144" property="lowtemp144" jdbcType="SMALLINT"/>
+        <result column="WINDD144" property="windd144" jdbcType="VARCHAR"/>
+        <result column="WINDP144" property="windp144" jdbcType="VARCHAR"/>
+        <result column="WIND24" property="wind24" jdbcType="VARCHAR"/>
+        <result column="WIND48" property="wind48" jdbcType="VARCHAR"/>
+        <result column="WIND72" property="wind72" jdbcType="VARCHAR"/>
+        <result column="WIND96" property="wind96" jdbcType="VARCHAR"/>
+        <result column="WIND120" property="wind120" jdbcType="VARCHAR"/>
+        <result column="WIND144" property="wind144" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        TIME, STCD, NAME, WEATHER_TEXT24, WEATHER12, WEATHER12_CODE, WEATHER24, WEATHER24_CODE,
+              HIGHTEMP24, LOWTEMP24, WINDD24, WINDP24, WEATHER_TEXT48, WEATHER36, WEATHER36_CODE,
+              WEATHER48, WEATHER48_CODE, HIGHTEMP48, LOWTEMP48, WINDD48, WINDP48, WEATHER_TEXT72,
+              WEATHER60, WEATHER60_CODE, WEATHER72, WEATHER72_CODE, HIGHTEMP72, LOWTEMP72, WINDD72,
+              WINDP72, WEATHER_TEXT96, WEATHER84, WEATHER84_CODE, WEATHER96, WEATHER96_CODE, HIGHTEMP96,
+              LOWTEMP96, WINDD96, WINDP96, WEATHER_TEXT120, WEATHER108, WEATHER108_CODE, WEATHER120,
+              WEATHER120_CODE, HIGHTEMP120, LOWTEMP120, WINDD120, WINDP120, WEATHER_TEXT144, WEATHER132,
+              WEATHER132_CODE, WEATHER144, WEATHER144_CODE, HIGHTEMP144, LOWTEMP144, WINDD144,
+              WINDP144, WIND24, WIND48, WIND72, WIND96, WIND120, WIND144
+    </sql>
+    <select id="findWeatherText24ByTimeAndStcd" parameterType="Map" resultType="java.lang.String">
+        SELECT weather12
+        FROM cityforecast
+        WHERE TIME BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+                                                             AND STCD = #{stcd,jdbcType=VARCHAR}
+        ORDER BY TIME LIMIT 1 offset 0
+    </select>
+    <select id="findWeatherText24ByParams" parameterType="Map" resultType="java.lang.String">
+        SELECT weather12
+        FROM cityforecast
+        WHERE
+            stcd = (SELECT stcd
+                    FROM qstation
+                    WHERE
+                        stnm = (SELECT dname
+                                FROM dbarea
+                                WHERE
+                                    area = #{area}))
+            AND Date(time) = #{mdateH}
+        order by Date(time) limit 1 offset 0
+    </select>
+</mapper>

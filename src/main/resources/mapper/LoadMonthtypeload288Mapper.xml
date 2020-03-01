@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadMonthtypeload288Mapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.LoadMonthtypeload288" >
+    <id column="area" property="area" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <id column="start_day" property="startDay" jdbcType="VARCHAR" />
+    <id column="daytype" property="daytype" jdbcType="INTEGER" />
+    <result column="end_day" property="endDay" jdbcType="VARCHAR" />
+    <result column="f00" property="f00" jdbcType="DECIMAL" />
+    <result column="f01" property="f01" jdbcType="DECIMAL" />
+    <result column="f02" property="f02" jdbcType="DECIMAL" />
+    <result column="f03" property="f03" jdbcType="DECIMAL" />
+    <result column="f04" property="f04" jdbcType="DECIMAL" />
+    <result column="f05" property="f05" jdbcType="DECIMAL" />
+    <result column="f06" property="f06" jdbcType="DECIMAL" />
+    <result column="f07" property="f07" jdbcType="DECIMAL" />
+    <result column="f08" property="f08" jdbcType="DECIMAL" />
+    <result column="f09" property="f09" jdbcType="DECIMAL" />
+    <result column="f10" property="f10" jdbcType="DECIMAL" />
+    <result column="f11" property="f11" jdbcType="DECIMAL" />
+    <result column="f12" property="f12" jdbcType="DECIMAL" />
+    <result column="f13" property="f13" jdbcType="DECIMAL" />
+    <result column="f14" property="f14" jdbcType="DECIMAL" />
+    <result column="f15" property="f15" jdbcType="DECIMAL" />
+    <result column="f16" property="f16" jdbcType="DECIMAL" />
+    <result column="f17" property="f17" jdbcType="DECIMAL" />
+    <result column="f18" property="f18" jdbcType="DECIMAL" />
+    <result column="f19" property="f19" jdbcType="DECIMAL" />
+    <result column="f20" property="f20" jdbcType="DECIMAL" />
+    <result column="f21" property="f21" jdbcType="DECIMAL" />
+    <result column="f22" property="f22" jdbcType="DECIMAL" />
+    <result column="f23" property="f23" jdbcType="DECIMAL" />
+    <result column="f24" property="f24" jdbcType="DECIMAL" />
+    <result column="f25" property="f25" jdbcType="DECIMAL" />
+    <result column="f26" property="f26" jdbcType="DECIMAL" />
+    <result column="f27" property="f27" jdbcType="DECIMAL" />
+    <result column="f28" property="f28" jdbcType="DECIMAL" />
+    <result column="f29" property="f29" jdbcType="DECIMAL" />
+    <result column="f30" property="f30" jdbcType="DECIMAL" />
+    <result column="f31" property="f31" jdbcType="DECIMAL" />
+    <result column="f32" property="f32" jdbcType="DECIMAL" />
+    <result column="f33" property="f33" jdbcType="DECIMAL" />
+    <result column="f34" property="f34" jdbcType="DECIMAL" />
+    <result column="f35" property="f35" jdbcType="DECIMAL" />
+    <result column="f36" property="f36" jdbcType="DECIMAL" />
+    <result column="f37" property="f37" jdbcType="DECIMAL" />
+    <result column="f38" property="f38" jdbcType="DECIMAL" />
+    <result column="f39" property="f39" jdbcType="DECIMAL" />
+    <result column="f40" property="f40" jdbcType="DECIMAL" />
+    <result column="f41" property="f41" jdbcType="DECIMAL" />
+    <result column="f42" property="f42" jdbcType="DECIMAL" />
+    <result column="f43" property="f43" jdbcType="DECIMAL" />
+    <result column="f44" property="f44" jdbcType="DECIMAL" />
+    <result column="f45" property="f45" jdbcType="DECIMAL" />
+    <result column="f46" property="f46" jdbcType="DECIMAL" />
+    <result column="f47" property="f47" jdbcType="DECIMAL" />
+    <result column="f48" property="f48" jdbcType="DECIMAL" />
+    <result column="f49" property="f49" jdbcType="DECIMAL" />
+    <result column="f50" property="f50" jdbcType="DECIMAL" />
+    <result column="f51" property="f51" jdbcType="DECIMAL" />
+    <result column="f52" property="f52" jdbcType="DECIMAL" />
+    <result column="f53" property="f53" jdbcType="DECIMAL" />
+    <result column="f54" property="f54" jdbcType="DECIMAL" />
+    <result column="f55" property="f55" jdbcType="DECIMAL" />
+    <result column="f56" property="f56" jdbcType="DECIMAL" />
+    <result column="f57" property="f57" jdbcType="DECIMAL" />
+    <result column="f58" property="f58" jdbcType="DECIMAL" />
+    <result column="f59" property="f59" jdbcType="DECIMAL" />
+    <result column="f60" property="f60" jdbcType="DECIMAL" />
+    <result column="f61" property="f61" jdbcType="DECIMAL" />
+    <result column="f62" property="f62" jdbcType="DECIMAL" />
+    <result column="f63" property="f63" jdbcType="DECIMAL" />
+    <result column="f64" property="f64" jdbcType="DECIMAL" />
+    <result column="f65" property="f65" jdbcType="DECIMAL" />
+    <result column="f66" property="f66" jdbcType="DECIMAL" />
+    <result column="f67" property="f67" jdbcType="DECIMAL" />
+    <result column="f68" property="f68" jdbcType="DECIMAL" />
+    <result column="f69" property="f69" jdbcType="DECIMAL" />
+    <result column="f70" property="f70" jdbcType="DECIMAL" />
+    <result column="f71" property="f71" jdbcType="DECIMAL" />
+    <result column="f72" property="f72" jdbcType="DECIMAL" />
+    <result column="f73" property="f73" jdbcType="DECIMAL" />
+    <result column="f74" property="f74" jdbcType="DECIMAL" />
+    <result column="f75" property="f75" jdbcType="DECIMAL" />
+    <result column="f76" property="f76" jdbcType="DECIMAL" />
+    <result column="f77" property="f77" jdbcType="DECIMAL" />
+    <result column="f78" property="f78" jdbcType="DECIMAL" />
+    <result column="f79" property="f79" jdbcType="DECIMAL" />
+    <result column="f80" property="f80" jdbcType="DECIMAL" />
+    <result column="f81" property="f81" jdbcType="DECIMAL" />
+    <result column="f82" property="f82" jdbcType="DECIMAL" />
+    <result column="f83" property="f83" jdbcType="DECIMAL" />
+    <result column="f84" property="f84" jdbcType="DECIMAL" />
+    <result column="f85" property="f85" jdbcType="DECIMAL" />
+    <result column="f86" property="f86" jdbcType="DECIMAL" />
+    <result column="f87" property="f87" jdbcType="DECIMAL" />
+    <result column="f88" property="f88" jdbcType="DECIMAL" />
+    <result column="f89" property="f89" jdbcType="DECIMAL" />
+    <result column="f90" property="f90" jdbcType="DECIMAL" />
+    <result column="f91" property="f91" jdbcType="DECIMAL" />
+    <result column="f92" property="f92" jdbcType="DECIMAL" />
+    <result column="f93" property="f93" jdbcType="DECIMAL" />
+    <result column="f94" property="f94" jdbcType="DECIMAL" />
+    <result column="f95" property="f95" jdbcType="DECIMAL" />
+    <result column="f96" property="f96" jdbcType="DECIMAL" />
+    <result column="f97" property="f97" jdbcType="DECIMAL" />
+    <result column="f98" property="f98" jdbcType="DECIMAL" />
+    <result column="f99" property="f99" jdbcType="DECIMAL" />
+    <result column="f100" property="f100" jdbcType="DECIMAL" />
+    <result column="f101" property="f101" jdbcType="DECIMAL" />
+    <result column="f102" property="f102" jdbcType="DECIMAL" />
+    <result column="f103" property="f103" jdbcType="DECIMAL" />
+    <result column="f104" property="f104" jdbcType="DECIMAL" />
+    <result column="f105" property="f105" jdbcType="DECIMAL" />
+    <result column="f106" property="f106" jdbcType="DECIMAL" />
+    <result column="f107" property="f107" jdbcType="DECIMAL" />
+    <result column="f108" property="f108" jdbcType="DECIMAL" />
+    <result column="f109" property="f109" jdbcType="DECIMAL" />
+    <result column="f110" property="f110" jdbcType="DECIMAL" />
+    <result column="f111" property="f111" jdbcType="DECIMAL" />
+    <result column="f112" property="f112" jdbcType="DECIMAL" />
+    <result column="f113" property="f113" jdbcType="DECIMAL" />
+    <result column="f114" property="f114" jdbcType="DECIMAL" />
+    <result column="f115" property="f115" jdbcType="DECIMAL" />
+    <result column="f116" property="f116" jdbcType="DECIMAL" />
+    <result column="f117" property="f117" jdbcType="DECIMAL" />
+    <result column="f118" property="f118" jdbcType="DECIMAL" />
+    <result column="f119" property="f119" jdbcType="DECIMAL" />
+    <result column="f120" property="f120" jdbcType="DECIMAL" />
+    <result column="f121" property="f121" jdbcType="DECIMAL" />
+    <result column="f122" property="f122" jdbcType="DECIMAL" />
+    <result column="f123" property="f123" jdbcType="DECIMAL" />
+    <result column="f124" property="f124" jdbcType="DECIMAL" />
+    <result column="f125" property="f125" jdbcType="DECIMAL" />
+    <result column="f126" property="f126" jdbcType="DECIMAL" />
+    <result column="f127" property="f127" jdbcType="DECIMAL" />
+    <result column="f128" property="f128" jdbcType="DECIMAL" />
+    <result column="f129" property="f129" jdbcType="DECIMAL" />
+    <result column="f130" property="f130" jdbcType="DECIMAL" />
+    <result column="f131" property="f131" jdbcType="DECIMAL" />
+    <result column="f132" property="f132" jdbcType="DECIMAL" />
+    <result column="f133" property="f133" jdbcType="DECIMAL" />
+    <result column="f134" property="f134" jdbcType="DECIMAL" />
+    <result column="f135" property="f135" jdbcType="DECIMAL" />
+    <result column="f136" property="f136" jdbcType="DECIMAL" />
+    <result column="f137" property="f137" jdbcType="DECIMAL" />
+    <result column="f138" property="f138" jdbcType="DECIMAL" />
+    <result column="f139" property="f139" jdbcType="DECIMAL" />
+    <result column="f140" property="f140" jdbcType="DECIMAL" />
+    <result column="f141" property="f141" jdbcType="DECIMAL" />
+    <result column="f142" property="f142" jdbcType="DECIMAL" />
+    <result column="f143" property="f143" jdbcType="DECIMAL" />
+    <result column="f144" property="f144" jdbcType="DECIMAL" />
+    <result column="f145" property="f145" jdbcType="DECIMAL" />
+    <result column="f146" property="f146" jdbcType="DECIMAL" />
+    <result column="f147" property="f147" jdbcType="DECIMAL" />
+    <result column="f148" property="f148" jdbcType="DECIMAL" />
+    <result column="f149" property="f149" jdbcType="DECIMAL" />
+    <result column="f150" property="f150" jdbcType="DECIMAL" />
+    <result column="f151" property="f151" jdbcType="DECIMAL" />
+    <result column="f152" property="f152" jdbcType="DECIMAL" />
+    <result column="f153" property="f153" jdbcType="DECIMAL" />
+    <result column="f154" property="f154" jdbcType="DECIMAL" />
+    <result column="f155" property="f155" jdbcType="DECIMAL" />
+    <result column="f156" property="f156" jdbcType="DECIMAL" />
+    <result column="f157" property="f157" jdbcType="DECIMAL" />
+    <result column="f158" property="f158" jdbcType="DECIMAL" />
+    <result column="f159" property="f159" jdbcType="DECIMAL" />
+    <result column="f160" property="f160" jdbcType="DECIMAL" />
+    <result column="f161" property="f161" jdbcType="DECIMAL" />
+    <result column="f162" property="f162" jdbcType="DECIMAL" />
+    <result column="f163" property="f163" jdbcType="DECIMAL" />
+    <result column="f164" property="f164" jdbcType="DECIMAL" />
+    <result column="f165" property="f165" jdbcType="DECIMAL" />
+    <result column="f166" property="f166" jdbcType="DECIMAL" />
+    <result column="f167" property="f167" jdbcType="DECIMAL" />
+    <result column="f168" property="f168" jdbcType="DECIMAL" />
+    <result column="f169" property="f169" jdbcType="DECIMAL" />
+    <result column="f170" property="f170" jdbcType="DECIMAL" />
+    <result column="f171" property="f171" jdbcType="DECIMAL" />
+    <result column="f172" property="f172" jdbcType="DECIMAL" />
+    <result column="f173" property="f173" jdbcType="DECIMAL" />
+    <result column="f174" property="f174" jdbcType="DECIMAL" />
+    <result column="f175" property="f175" jdbcType="DECIMAL" />
+    <result column="f176" property="f176" jdbcType="DECIMAL" />
+    <result column="f177" property="f177" jdbcType="DECIMAL" />
+    <result column="f178" property="f178" jdbcType="DECIMAL" />
+    <result column="f179" property="f179" jdbcType="DECIMAL" />
+    <result column="f180" property="f180" jdbcType="DECIMAL" />
+    <result column="f181" property="f181" jdbcType="DECIMAL" />
+    <result column="f182" property="f182" jdbcType="DECIMAL" />
+    <result column="f183" property="f183" jdbcType="DECIMAL" />
+    <result column="f184" property="f184" jdbcType="DECIMAL" />
+    <result column="f185" property="f185" jdbcType="DECIMAL" />
+    <result column="f186" property="f186" jdbcType="DECIMAL" />
+    <result column="f187" property="f187" jdbcType="DECIMAL" />
+    <result column="f188" property="f188" jdbcType="DECIMAL" />
+    <result column="f189" property="f189" jdbcType="DECIMAL" />
+    <result column="f190" property="f190" jdbcType="DECIMAL" />
+    <result column="f191" property="f191" jdbcType="DECIMAL" />
+    <result column="f192" property="f192" jdbcType="DECIMAL" />
+    <result column="f193" property="f193" jdbcType="DECIMAL" />
+    <result column="f194" property="f194" jdbcType="DECIMAL" />
+    <result column="f195" property="f195" jdbcType="DECIMAL" />
+    <result column="f196" property="f196" jdbcType="DECIMAL" />
+    <result column="f197" property="f197" jdbcType="DECIMAL" />
+    <result column="f198" property="f198" jdbcType="DECIMAL" />
+    <result column="f199" property="f199" jdbcType="DECIMAL" />
+    <result column="f200" property="f200" jdbcType="DECIMAL" />
+    <result column="f201" property="f201" jdbcType="DECIMAL" />
+    <result column="f202" property="f202" jdbcType="DECIMAL" />
+    <result column="f203" property="f203" jdbcType="DECIMAL" />
+    <result column="f204" property="f204" jdbcType="DECIMAL" />
+    <result column="f205" property="f205" jdbcType="DECIMAL" />
+    <result column="f206" property="f206" jdbcType="DECIMAL" />
+    <result column="f207" property="f207" jdbcType="DECIMAL" />
+    <result column="f208" property="f208" jdbcType="DECIMAL" />
+    <result column="f209" property="f209" jdbcType="DECIMAL" />
+    <result column="f210" property="f210" jdbcType="DECIMAL" />
+    <result column="f211" property="f211" jdbcType="DECIMAL" />
+    <result column="f212" property="f212" jdbcType="DECIMAL" />
+    <result column="f213" property="f213" jdbcType="DECIMAL" />
+    <result column="f214" property="f214" jdbcType="DECIMAL" />
+    <result column="f215" property="f215" jdbcType="DECIMAL" />
+    <result column="f216" property="f216" jdbcType="DECIMAL" />
+    <result column="f217" property="f217" jdbcType="DECIMAL" />
+    <result column="f218" property="f218" jdbcType="DECIMAL" />
+    <result column="f219" property="f219" jdbcType="DECIMAL" />
+    <result column="f220" property="f220" jdbcType="DECIMAL" />
+    <result column="f221" property="f221" jdbcType="DECIMAL" />
+    <result column="f222" property="f222" jdbcType="DECIMAL" />
+    <result column="f223" property="f223" jdbcType="DECIMAL" />
+    <result column="f224" property="f224" jdbcType="DECIMAL" />
+    <result column="f225" property="f225" jdbcType="DECIMAL" />
+    <result column="f226" property="f226" jdbcType="DECIMAL" />
+    <result column="f227" property="f227" jdbcType="DECIMAL" />
+    <result column="f228" property="f228" jdbcType="DECIMAL" />
+    <result column="f229" property="f229" jdbcType="DECIMAL" />
+    <result column="f230" property="f230" jdbcType="DECIMAL" />
+    <result column="f231" property="f231" jdbcType="DECIMAL" />
+    <result column="f232" property="f232" jdbcType="DECIMAL" />
+    <result column="f233" property="f233" jdbcType="DECIMAL" />
+    <result column="f234" property="f234" jdbcType="DECIMAL" />
+    <result column="f235" property="f235" jdbcType="DECIMAL" />
+    <result column="f236" property="f236" jdbcType="DECIMAL" />
+    <result column="f237" property="f237" jdbcType="DECIMAL" />
+    <result column="f238" property="f238" jdbcType="DECIMAL" />
+    <result column="f239" property="f239" jdbcType="DECIMAL" />
+    <result column="f240" property="f240" jdbcType="DECIMAL" />
+    <result column="f241" property="f241" jdbcType="DECIMAL" />
+    <result column="f242" property="f242" jdbcType="DECIMAL" />
+    <result column="f243" property="f243" jdbcType="DECIMAL" />
+    <result column="f244" property="f244" jdbcType="DECIMAL" />
+    <result column="f245" property="f245" jdbcType="DECIMAL" />
+    <result column="f246" property="f246" jdbcType="DECIMAL" />
+    <result column="f247" property="f247" jdbcType="DECIMAL" />
+    <result column="f248" property="f248" jdbcType="DECIMAL" />
+    <result column="f249" property="f249" jdbcType="DECIMAL" />
+    <result column="f250" property="f250" jdbcType="DECIMAL" />
+    <result column="f251" property="f251" jdbcType="DECIMAL" />
+    <result column="f252" property="f252" jdbcType="DECIMAL" />
+    <result column="f253" property="f253" jdbcType="DECIMAL" />
+    <result column="f254" property="f254" jdbcType="DECIMAL" />
+    <result column="f255" property="f255" jdbcType="DECIMAL" />
+    <result column="f256" property="f256" jdbcType="DECIMAL" />
+    <result column="f257" property="f257" jdbcType="DECIMAL" />
+    <result column="f258" property="f258" jdbcType="DECIMAL" />
+    <result column="f259" property="f259" jdbcType="DECIMAL" />
+    <result column="f260" property="f260" jdbcType="DECIMAL" />
+    <result column="f261" property="f261" jdbcType="DECIMAL" />
+    <result column="f262" property="f262" jdbcType="DECIMAL" />
+    <result column="f263" property="f263" jdbcType="DECIMAL" />
+    <result column="f264" property="f264" jdbcType="DECIMAL" />
+    <result column="f265" property="f265" jdbcType="DECIMAL" />
+    <result column="f266" property="f266" jdbcType="DECIMAL" />
+    <result column="f267" property="f267" jdbcType="DECIMAL" />
+    <result column="f268" property="f268" jdbcType="DECIMAL" />
+    <result column="f269" property="f269" jdbcType="DECIMAL" />
+    <result column="f270" property="f270" jdbcType="DECIMAL" />
+    <result column="f271" property="f271" jdbcType="DECIMAL" />
+    <result column="f272" property="f272" jdbcType="DECIMAL" />
+    <result column="f273" property="f273" jdbcType="DECIMAL" />
+    <result column="f274" property="f274" jdbcType="DECIMAL" />
+    <result column="f275" property="f275" jdbcType="DECIMAL" />
+    <result column="f276" property="f276" jdbcType="DECIMAL" />
+    <result column="f277" property="f277" jdbcType="DECIMAL" />
+    <result column="f278" property="f278" jdbcType="DECIMAL" />
+    <result column="f279" property="f279" jdbcType="DECIMAL" />
+    <result column="f280" property="f280" jdbcType="DECIMAL" />
+    <result column="f281" property="f281" jdbcType="DECIMAL" />
+    <result column="f282" property="f282" jdbcType="DECIMAL" />
+    <result column="f283" property="f283" jdbcType="DECIMAL" />
+    <result column="f284" property="f284" jdbcType="DECIMAL" />
+    <result column="f285" property="f285" jdbcType="DECIMAL" />
+    <result column="f286" property="f286" jdbcType="DECIMAL" />
+    <result column="f287" property="f287" jdbcType="DECIMAL" />
+    <result column="f288" property="f288" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area, id, start_day, daytype, end_day, f00, f01, f02, f03, f04, f05, f06, f07, f08, 
+    f09, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, 
+    f26, f27, f28, f29, f30, f31, f32, f33, f34, f35, f36, f37, f38, f39, f40, f41, f42, 
+    f43, f44, f45, f46, f47, f48, f49, f50, f51, f52, f53, f54, f55, f56, f57, f58, f59, 
+    f60, f61, f62, f63, f64, f65, f66, f67, f68, f69, f70, f71, f72, f73, f74, f75, f76, 
+    f77, f78, f79, f80, f81, f82, f83, f84, f85, f86, f87, f88, f89, f90, f91, f92, f93, 
+    f94, f95, f96, f97, f98, f99, f100, f101, f102, f103, f104, f105, f106, f107, f108, 
+    f109, f110, f111, f112, f113, f114, f115, f116, f117, f118, f119, f120, f121, f122, 
+    f123, f124, f125, f126, f127, f128, f129, f130, f131, f132, f133, f134, f135, f136, 
+    f137, f138, f139, f140, f141, f142, f143, f144, f145, f146, f147, f148, f149, f150, 
+    f151, f152, f153, f154, f155, f156, f157, f158, f159, f160, f161, f162, f163, f164, 
+    f165, f166, f167, f168, f169, f170, f171, f172, f173, f174, f175, f176, f177, f178, 
+    f179, f180, f181, f182, f183, f184, f185, f186, f187, f188, f189, f190, f191, f192, 
+    f193, f194, f195, f196, f197, f198, f199, f200, f201, f202, f203, f204, f205, f206, 
+    f207, f208, f209, f210, f211, f212, f213, f214, f215, f216, f217, f218, f219, f220, 
+    f221, f222, f223, f224, f225, f226, f227, f228, f229, f230, f231, f232, f233, f234, 
+    f235, f236, f237, f238, f239, f240, f241, f242, f243, f244, f245, f246, f247, f248, 
+    f249, f250, f251, f252, f253, f254, f255, f256, f257, f258, f259, f260, f261, f262, 
+    f263, f264, f265, f266, f267, f268, f269, f270, f271, f272, f273, f274, f275, f276, 
+    f277, f278, f279, f280, f281, f282, f283, f284, f285, f286, f287, f288
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadMonthtypeload288Key" >
+    select 
+    <include refid="Base_Column_List" />
+    from load_monthtypeload_288
+    where area = #{area,jdbcType=INTEGER}
+      and id = #{id,jdbcType=DECIMAL}
+      and start_day = #{startDay,jdbcType=VARCHAR}
+      and daytype = #{daytype,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectQuery288" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadMonthtypeload288Key" >
+    select
+    <include refid="Base_Column_List" />
+    from load_monthtypeload_288
+    where  1=1
+    <if test="area!=null">
+      and area   =  #{area,jdbcType=VARCHAR}
+    </if>
+    <if test="startDay!=null">
+      and start_day <![CDATA[ >= ]]> #{startDay,jdbcType=VARCHAR}
+    </if>
+    <if test="endDay!=null">
+      and end_day <![CDATA[ <= ]]> #{endDay,jdbcType=VARCHAR}
+    </if>
+    <if test="daytype!=null">
+      and daytype = #{daytype,jdbcType=INTEGER}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.dky.entity.LoadMonthtypeload288" >
+    insert into load_monthtypeload_288 (area, id, start_day, 
+      daytype, end_day, f00, 
+      f01, f02, f03, f04, 
+      f05, f06, f07, f08, 
+      f09, f10, f11, f12, 
+      f13, f14, f15, f16, 
+      f17, f18, f19, f20, 
+      f21, f22, f23, f24, 
+      f25, f26, f27, f28, 
+      f29, f30, f31, f32, 
+      f33, f34, f35, f36, 
+      f37, f38, f39, f40, 
+      f41, f42, f43, f44, 
+      f45, f46, f47, f48, 
+      f49, f50, f51, f52, 
+      f53, f54, f55, f56, 
+      f57, f58, f59, f60, 
+      f61, f62, f63, f64, 
+      f65, f66, f67, f68, 
+      f69, f70, f71, f72, 
+      f73, f74, f75, f76, 
+      f77, f78, f79, f80, 
+      f81, f82, f83, f84, 
+      f85, f86, f87, f88, 
+      f89, f90, f91, f92, 
+      f93, f94, f95, f96, 
+      f97, f98, f99, f100, 
+      f101, f102, f103, f104, 
+      f105, f106, f107, f108, 
+      f109, f110, f111, f112, 
+      f113, f114, f115, f116, 
+      f117, f118, f119, f120, 
+      f121, f122, f123, f124, 
+      f125, f126, f127, f128, 
+      f129, f130, f131, f132, 
+      f133, f134, f135, f136, 
+      f137, f138, f139, f140, 
+      f141, f142, f143, f144, 
+      f145, f146, f147, f148, 
+      f149, f150, f151, f152, 
+      f153, f154, f155, f156, 
+      f157, f158, f159, f160, 
+      f161, f162, f163, f164, 
+      f165, f166, f167, f168, 
+      f169, f170, f171, f172, 
+      f173, f174, f175, f176, 
+      f177, f178, f179, f180, 
+      f181, f182, f183, f184, 
+      f185, f186, f187, f188, 
+      f189, f190, f191, f192, 
+      f193, f194, f195, f196, 
+      f197, f198, f199, f200, 
+      f201, f202, f203, f204, 
+      f205, f206, f207, f208, 
+      f209, f210, f211, f212, 
+      f213, f214, f215, f216, 
+      f217, f218, f219, f220, 
+      f221, f222, f223, f224, 
+      f225, f226, f227, f228, 
+      f229, f230, f231, f232, 
+      f233, f234, f235, f236, 
+      f237, f238, f239, f240, 
+      f241, f242, f243, f244, 
+      f245, f246, f247, f248, 
+      f249, f250, f251, f252, 
+      f253, f254, f255, f256, 
+      f257, f258, f259, f260, 
+      f261, f262, f263, f264, 
+      f265, f266, f267, f268, 
+      f269, f270, f271, f272, 
+      f273, f274, f275, f276, 
+      f277, f278, f279, f280, 
+      f281, f282, f283, f284, 
+      f285, f286, f287, f288
+      )
+    values (#{area,jdbcType=INTEGER}, #{id,jdbcType=DECIMAL}, #{startDay,jdbcType=VARCHAR}, 
+      #{daytype,jdbcType=INTEGER}, #{endDay,jdbcType=VARCHAR}, #{f00,jdbcType=DECIMAL}, 
+      #{f01,jdbcType=DECIMAL}, #{f02,jdbcType=DECIMAL}, #{f03,jdbcType=DECIMAL}, #{f04,jdbcType=DECIMAL}, 
+      #{f05,jdbcType=DECIMAL}, #{f06,jdbcType=DECIMAL}, #{f07,jdbcType=DECIMAL}, #{f08,jdbcType=DECIMAL}, 
+      #{f09,jdbcType=DECIMAL}, #{f10,jdbcType=DECIMAL}, #{f11,jdbcType=DECIMAL}, #{f12,jdbcType=DECIMAL}, 
+      #{f13,jdbcType=DECIMAL}, #{f14,jdbcType=DECIMAL}, #{f15,jdbcType=DECIMAL}, #{f16,jdbcType=DECIMAL}, 
+      #{f17,jdbcType=DECIMAL}, #{f18,jdbcType=DECIMAL}, #{f19,jdbcType=DECIMAL}, #{f20,jdbcType=DECIMAL}, 
+      #{f21,jdbcType=DECIMAL}, #{f22,jdbcType=DECIMAL}, #{f23,jdbcType=DECIMAL}, #{f24,jdbcType=DECIMAL}, 
+      #{f25,jdbcType=DECIMAL}, #{f26,jdbcType=DECIMAL}, #{f27,jdbcType=DECIMAL}, #{f28,jdbcType=DECIMAL}, 
+      #{f29,jdbcType=DECIMAL}, #{f30,jdbcType=DECIMAL}, #{f31,jdbcType=DECIMAL}, #{f32,jdbcType=DECIMAL}, 
+      #{f33,jdbcType=DECIMAL}, #{f34,jdbcType=DECIMAL}, #{f35,jdbcType=DECIMAL}, #{f36,jdbcType=DECIMAL}, 
+      #{f37,jdbcType=DECIMAL}, #{f38,jdbcType=DECIMAL}, #{f39,jdbcType=DECIMAL}, #{f40,jdbcType=DECIMAL}, 
+      #{f41,jdbcType=DECIMAL}, #{f42,jdbcType=DECIMAL}, #{f43,jdbcType=DECIMAL}, #{f44,jdbcType=DECIMAL}, 
+      #{f45,jdbcType=DECIMAL}, #{f46,jdbcType=DECIMAL}, #{f47,jdbcType=DECIMAL}, #{f48,jdbcType=DECIMAL}, 
+      #{f49,jdbcType=DECIMAL}, #{f50,jdbcType=DECIMAL}, #{f51,jdbcType=DECIMAL}, #{f52,jdbcType=DECIMAL}, 
+      #{f53,jdbcType=DECIMAL}, #{f54,jdbcType=DECIMAL}, #{f55,jdbcType=DECIMAL}, #{f56,jdbcType=DECIMAL}, 
+      #{f57,jdbcType=DECIMAL}, #{f58,jdbcType=DECIMAL}, #{f59,jdbcType=DECIMAL}, #{f60,jdbcType=DECIMAL}, 
+      #{f61,jdbcType=DECIMAL}, #{f62,jdbcType=DECIMAL}, #{f63,jdbcType=DECIMAL}, #{f64,jdbcType=DECIMAL}, 
+      #{f65,jdbcType=DECIMAL}, #{f66,jdbcType=DECIMAL}, #{f67,jdbcType=DECIMAL}, #{f68,jdbcType=DECIMAL}, 
+      #{f69,jdbcType=DECIMAL}, #{f70,jdbcType=DECIMAL}, #{f71,jdbcType=DECIMAL}, #{f72,jdbcType=DECIMAL}, 
+      #{f73,jdbcType=DECIMAL}, #{f74,jdbcType=DECIMAL}, #{f75,jdbcType=DECIMAL}, #{f76,jdbcType=DECIMAL}, 
+      #{f77,jdbcType=DECIMAL}, #{f78,jdbcType=DECIMAL}, #{f79,jdbcType=DECIMAL}, #{f80,jdbcType=DECIMAL}, 
+      #{f81,jdbcType=DECIMAL}, #{f82,jdbcType=DECIMAL}, #{f83,jdbcType=DECIMAL}, #{f84,jdbcType=DECIMAL}, 
+      #{f85,jdbcType=DECIMAL}, #{f86,jdbcType=DECIMAL}, #{f87,jdbcType=DECIMAL}, #{f88,jdbcType=DECIMAL}, 
+      #{f89,jdbcType=DECIMAL}, #{f90,jdbcType=DECIMAL}, #{f91,jdbcType=DECIMAL}, #{f92,jdbcType=DECIMAL}, 
+      #{f93,jdbcType=DECIMAL}, #{f94,jdbcType=DECIMAL}, #{f95,jdbcType=DECIMAL}, #{f96,jdbcType=DECIMAL}, 
+      #{f97,jdbcType=DECIMAL}, #{f98,jdbcType=DECIMAL}, #{f99,jdbcType=DECIMAL}, #{f100,jdbcType=DECIMAL}, 
+      #{f101,jdbcType=DECIMAL}, #{f102,jdbcType=DECIMAL}, #{f103,jdbcType=DECIMAL}, #{f104,jdbcType=DECIMAL}, 
+      #{f105,jdbcType=DECIMAL}, #{f106,jdbcType=DECIMAL}, #{f107,jdbcType=DECIMAL}, #{f108,jdbcType=DECIMAL}, 
+      #{f109,jdbcType=DECIMAL}, #{f110,jdbcType=DECIMAL}, #{f111,jdbcType=DECIMAL}, #{f112,jdbcType=DECIMAL}, 
+      #{f113,jdbcType=DECIMAL}, #{f114,jdbcType=DECIMAL}, #{f115,jdbcType=DECIMAL}, #{f116,jdbcType=DECIMAL}, 
+      #{f117,jdbcType=DECIMAL}, #{f118,jdbcType=DECIMAL}, #{f119,jdbcType=DECIMAL}, #{f120,jdbcType=DECIMAL}, 
+      #{f121,jdbcType=DECIMAL}, #{f122,jdbcType=DECIMAL}, #{f123,jdbcType=DECIMAL}, #{f124,jdbcType=DECIMAL}, 
+      #{f125,jdbcType=DECIMAL}, #{f126,jdbcType=DECIMAL}, #{f127,jdbcType=DECIMAL}, #{f128,jdbcType=DECIMAL}, 
+      #{f129,jdbcType=DECIMAL}, #{f130,jdbcType=DECIMAL}, #{f131,jdbcType=DECIMAL}, #{f132,jdbcType=DECIMAL}, 
+      #{f133,jdbcType=DECIMAL}, #{f134,jdbcType=DECIMAL}, #{f135,jdbcType=DECIMAL}, #{f136,jdbcType=DECIMAL}, 
+      #{f137,jdbcType=DECIMAL}, #{f138,jdbcType=DECIMAL}, #{f139,jdbcType=DECIMAL}, #{f140,jdbcType=DECIMAL}, 
+      #{f141,jdbcType=DECIMAL}, #{f142,jdbcType=DECIMAL}, #{f143,jdbcType=DECIMAL}, #{f144,jdbcType=DECIMAL}, 
+      #{f145,jdbcType=DECIMAL}, #{f146,jdbcType=DECIMAL}, #{f147,jdbcType=DECIMAL}, #{f148,jdbcType=DECIMAL}, 
+      #{f149,jdbcType=DECIMAL}, #{f150,jdbcType=DECIMAL}, #{f151,jdbcType=DECIMAL}, #{f152,jdbcType=DECIMAL}, 
+      #{f153,jdbcType=DECIMAL}, #{f154,jdbcType=DECIMAL}, #{f155,jdbcType=DECIMAL}, #{f156,jdbcType=DECIMAL}, 
+      #{f157,jdbcType=DECIMAL}, #{f158,jdbcType=DECIMAL}, #{f159,jdbcType=DECIMAL}, #{f160,jdbcType=DECIMAL}, 
+      #{f161,jdbcType=DECIMAL}, #{f162,jdbcType=DECIMAL}, #{f163,jdbcType=DECIMAL}, #{f164,jdbcType=DECIMAL}, 
+      #{f165,jdbcType=DECIMAL}, #{f166,jdbcType=DECIMAL}, #{f167,jdbcType=DECIMAL}, #{f168,jdbcType=DECIMAL}, 
+      #{f169,jdbcType=DECIMAL}, #{f170,jdbcType=DECIMAL}, #{f171,jdbcType=DECIMAL}, #{f172,jdbcType=DECIMAL}, 
+      #{f173,jdbcType=DECIMAL}, #{f174,jdbcType=DECIMAL}, #{f175,jdbcType=DECIMAL}, #{f176,jdbcType=DECIMAL}, 
+      #{f177,jdbcType=DECIMAL}, #{f178,jdbcType=DECIMAL}, #{f179,jdbcType=DECIMAL}, #{f180,jdbcType=DECIMAL}, 
+      #{f181,jdbcType=DECIMAL}, #{f182,jdbcType=DECIMAL}, #{f183,jdbcType=DECIMAL}, #{f184,jdbcType=DECIMAL}, 
+      #{f185,jdbcType=DECIMAL}, #{f186,jdbcType=DECIMAL}, #{f187,jdbcType=DECIMAL}, #{f188,jdbcType=DECIMAL}, 
+      #{f189,jdbcType=DECIMAL}, #{f190,jdbcType=DECIMAL}, #{f191,jdbcType=DECIMAL}, #{f192,jdbcType=DECIMAL}, 
+      #{f193,jdbcType=DECIMAL}, #{f194,jdbcType=DECIMAL}, #{f195,jdbcType=DECIMAL}, #{f196,jdbcType=DECIMAL}, 
+      #{f197,jdbcType=DECIMAL}, #{f198,jdbcType=DECIMAL}, #{f199,jdbcType=DECIMAL}, #{f200,jdbcType=DECIMAL}, 
+      #{f201,jdbcType=DECIMAL}, #{f202,jdbcType=DECIMAL}, #{f203,jdbcType=DECIMAL}, #{f204,jdbcType=DECIMAL}, 
+      #{f205,jdbcType=DECIMAL}, #{f206,jdbcType=DECIMAL}, #{f207,jdbcType=DECIMAL}, #{f208,jdbcType=DECIMAL}, 
+      #{f209,jdbcType=DECIMAL}, #{f210,jdbcType=DECIMAL}, #{f211,jdbcType=DECIMAL}, #{f212,jdbcType=DECIMAL}, 
+      #{f213,jdbcType=DECIMAL}, #{f214,jdbcType=DECIMAL}, #{f215,jdbcType=DECIMAL}, #{f216,jdbcType=DECIMAL}, 
+      #{f217,jdbcType=DECIMAL}, #{f218,jdbcType=DECIMAL}, #{f219,jdbcType=DECIMAL}, #{f220,jdbcType=DECIMAL}, 
+      #{f221,jdbcType=DECIMAL}, #{f222,jdbcType=DECIMAL}, #{f223,jdbcType=DECIMAL}, #{f224,jdbcType=DECIMAL}, 
+      #{f225,jdbcType=DECIMAL}, #{f226,jdbcType=DECIMAL}, #{f227,jdbcType=DECIMAL}, #{f228,jdbcType=DECIMAL}, 
+      #{f229,jdbcType=DECIMAL}, #{f230,jdbcType=DECIMAL}, #{f231,jdbcType=DECIMAL}, #{f232,jdbcType=DECIMAL}, 
+      #{f233,jdbcType=DECIMAL}, #{f234,jdbcType=DECIMAL}, #{f235,jdbcType=DECIMAL}, #{f236,jdbcType=DECIMAL}, 
+      #{f237,jdbcType=DECIMAL}, #{f238,jdbcType=DECIMAL}, #{f239,jdbcType=DECIMAL}, #{f240,jdbcType=DECIMAL}, 
+      #{f241,jdbcType=DECIMAL}, #{f242,jdbcType=DECIMAL}, #{f243,jdbcType=DECIMAL}, #{f244,jdbcType=DECIMAL}, 
+      #{f245,jdbcType=DECIMAL}, #{f246,jdbcType=DECIMAL}, #{f247,jdbcType=DECIMAL}, #{f248,jdbcType=DECIMAL}, 
+      #{f249,jdbcType=DECIMAL}, #{f250,jdbcType=DECIMAL}, #{f251,jdbcType=DECIMAL}, #{f252,jdbcType=DECIMAL}, 
+      #{f253,jdbcType=DECIMAL}, #{f254,jdbcType=DECIMAL}, #{f255,jdbcType=DECIMAL}, #{f256,jdbcType=DECIMAL}, 
+      #{f257,jdbcType=DECIMAL}, #{f258,jdbcType=DECIMAL}, #{f259,jdbcType=DECIMAL}, #{f260,jdbcType=DECIMAL}, 
+      #{f261,jdbcType=DECIMAL}, #{f262,jdbcType=DECIMAL}, #{f263,jdbcType=DECIMAL}, #{f264,jdbcType=DECIMAL}, 
+      #{f265,jdbcType=DECIMAL}, #{f266,jdbcType=DECIMAL}, #{f267,jdbcType=DECIMAL}, #{f268,jdbcType=DECIMAL}, 
+      #{f269,jdbcType=DECIMAL}, #{f270,jdbcType=DECIMAL}, #{f271,jdbcType=DECIMAL}, #{f272,jdbcType=DECIMAL}, 
+      #{f273,jdbcType=DECIMAL}, #{f274,jdbcType=DECIMAL}, #{f275,jdbcType=DECIMAL}, #{f276,jdbcType=DECIMAL}, 
+      #{f277,jdbcType=DECIMAL}, #{f278,jdbcType=DECIMAL}, #{f279,jdbcType=DECIMAL}, #{f280,jdbcType=DECIMAL}, 
+      #{f281,jdbcType=DECIMAL}, #{f282,jdbcType=DECIMAL}, #{f283,jdbcType=DECIMAL}, #{f284,jdbcType=DECIMAL}, 
+      #{f285,jdbcType=DECIMAL}, #{f286,jdbcType=DECIMAL}, #{f287,jdbcType=DECIMAL}, #{f288,jdbcType=DECIMAL}
+      )
+  </insert>
+</mapper>

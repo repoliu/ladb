@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+    <!-- 每个脚本对应的日志文件大小，单位MB -->
+    <logsize>50</logsize>
+
+    <!-- 每个脚本保存的日志文件个数 -->
+    <lognum>180</lognum>
+
+    <!--linux日志名称-->
+    <!--<logname>../logs/ladb.log</logname>-->
+
+    <!--windows日志名称-->
+    <logname>pythonlog.log</logname>
+</config>

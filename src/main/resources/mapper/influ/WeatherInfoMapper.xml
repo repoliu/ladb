@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.influ.WeatherInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.influ.WeatherInfo" >
+    <id column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="weather_RESULT" property="weatherResult" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    time, AREA_NAME, weather_RESULT, notes
+  </sql>
+  <select id="findLastVerTime" resultType="java.util.Date" >
+    SELECT MAX(time)
+    FROM weather_info
+  </select>
+  <select id="findImportListByVerTime" resultMap="BaseResultMap"
+          parameterType="Map">
+    SELECT time,AREA_NAME,weather_RESULT
+    FROM weather_info
+    WHERE
+    time between #{startTime} and #{endTime}
+    ORDER BY time DESC
+  </select>
+  <insert id="insert" parameterType="com.dky.entity.influ.WeatherInfo" >
+    insert into weather_info (time, AREA_NAME, weather_RESULT,
+    notes)
+    values (#{time,jdbcType=TIMESTAMP}, #{areaName,jdbcType=VARCHAR}, #{weatherResult,jdbcType=VARCHAR},
+    #{notes,jdbcType=VARCHAR})
+  </insert>
+</mapper>

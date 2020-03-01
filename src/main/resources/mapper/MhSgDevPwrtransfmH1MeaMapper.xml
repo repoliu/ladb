@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dky.mapper.MhSgDevPwrtransfmH1MeaMapper">
+
+    <select id="selectBusParamHisdata" resultType="com.dky.entity.MhSgDevPwrtransfmH1Mea" parameterType="Map">
+        select substr(create_datetime, 11,6) as create_datetime,meas_value from ${tmpTableName}
+        where 1=1
+        <if test="id!=null and id!=''">
+            and dev_id = #{id}
+        </if>
+        <if test="mdate==null || mdate==''">
+            and substr(create_datetime, 0,11) = (select max(substr(create_datetime, 0,11)) from ${tmpTableName})
+        </if>
+        <if test="mdate!=null and mdate!=''">
+            and substr(create_datetime, 0,11) = #{mdate}
+        </if>
+        and substr(create_datetime, 15,2) in ('00','15','30','45')
+        ORDER BY substr(create_datetime, 0,17)
+    </select>
+
+    <select id="selectMaxDate" resultType="com.dky.entity.MhSgDevPwrtransfmH1Mea" parameterType="Map">
+        select max(substr(create_datetime, 0,11)) as create_datetime from ${tmpTableName}
+    </select>
+
+</mapper>

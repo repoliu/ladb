@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.TemplateMapper">
+    <resultMap id="BaseResultMap" type="com.dky.entity.define.Template">
+        <id column="serviceName" property="area" jdbcType="VARCHAR"/>
+        <id column="serviceNumber" property="mdate" jdbcType="INTEGER"/>
+        <result column="setName" property="aday" jdbcType="VARCHAR"/>
+        <result column="setValue" property="bday" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="destinationResult" type="java.util.HashMap">
+        <result column="serviceName"/>
+        <result column="serviceNumber"/>
+    </resultMap>
+
+    <select id="judgeNameSame" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT  count(*) FROM loadfor.template WHERE serviceName = #{serviceName}
+    </select>
+
+    <select id="numberAdd"  resultType="java.lang.Integer">
+        SELECT  max(serviceNumber) FROM loadfor.template
+    </select>
+
+    <select id="getNameAndNumber"  resultType="java.util.HashMap"  >
+        SELECT distinct serviceName,serviceNumber  FROM loadfor.template
+    </select>
+
+    <insert id="insert" parameterType="List">
+        INSERT INTO loadfor.template(
+        serviceName,serviceNumber,setName,setValue) values
+        <foreach collection="list" index="index" item="r"  separator="," >
+            (#{r.serviceName},#{r.serviceNumber},#{r.setName},#{r.setValue})
+        </foreach>;
+    </insert>
+
+
+</mapper>

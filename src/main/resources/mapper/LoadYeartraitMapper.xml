@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dky.mapper.LoadYeartraitMapper" >
+  <resultMap id="BaseResultMap" type="com.dky.entity.LoadYeartrait" >
+    <id column="area" property="area" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <id column="min" property="min" jdbcType="INTEGER" />
+    <id column="year" property="year" jdbcType="VARCHAR" />
+    <result column="maxload" property="maxload" jdbcType="DECIMAL" />
+    <result column="maxdate" property="maxdate" jdbcType="VARCHAR" />
+    <result column="minload" property="minload" jdbcType="DECIMAL" />
+    <result column="mindate" property="mindate" jdbcType="VARCHAR" />
+    <result column="aveload" property="aveload" jdbcType="DECIMAL" />
+    <result column="loadrate" property="loadrate" jdbcType="DECIMAL" />
+    <result column="minloadrate" property="minloadrate" jdbcType="DECIMAL" />
+    <result column="maxdiffer" property="maxdiffer" jdbcType="DECIMAL" />
+    <result column="maxddate" property="maxddate" jdbcType="VARCHAR" />
+    <result column="maxdifferrate" property="maxdifferrate" jdbcType="DECIMAL" />
+    <result column="maxdrdate" property="maxdrdate" jdbcType="VARCHAR" />
+    <result column="mindiffer" property="mindiffer" jdbcType="DECIMAL" />
+    <result column="minddate" property="minddate" jdbcType="VARCHAR" />
+    <result column="mindifferrate" property="mindifferrate" jdbcType="DECIMAL" />
+    <result column="mindrdate" property="mindrdate" jdbcType="VARCHAR" />
+    <result column="avediffer" property="avediffer" jdbcType="DECIMAL" />
+    <result column="avedifferrate" property="avedifferrate" jdbcType="DECIMAL" />
+    <result column="ref_day" property="refDay" jdbcType="VARCHAR" />
+    <result column="ver_time" property="verTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area, id, min, year, maxload, maxdate, minload, mindate, aveload, loadrate, minloadrate, 
+    maxdiffer, maxddate, maxdifferrate, maxdrdate, mindiffer, minddate, mindifferrate, 
+    mindrdate, avediffer, avedifferrate, ref_day, ver_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.dky.entity.LoadYeartraitKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from load_yeartrait
+    where area = #{area,jdbcType=INTEGER}
+      and id = #{id,jdbcType=DECIMAL}
+      and min = #{min,jdbcType=INTEGER}
+      and year = #{year,jdbcType=VARCHAR}
+  </select>
+</mapper>
